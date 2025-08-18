@@ -3,6 +3,7 @@ import { renderListings } from "../../../../ui/listings/renderListings.js";
 import { getQueryParam } from "../../../utils/getQueryParam.js";
 import { fetchAdDetails } from "../../../api/fetchAdDetails.js";
 import { renderAdDetails } from "../../../../ui/listings/adDetails/renderAdDetails.js";
+import { placeBidHandler } from "./placeBidHandler.js";
 
 export async function adDetailsHandler(numberOfListings = 4) {
   try {
@@ -17,6 +18,10 @@ export async function adDetailsHandler(numberOfListings = 4) {
     const adDetails = await fetchAdDetails(listingId);
     console.log("Fetched ad details:", adDetails.data);
     renderAdDetails(adDetails.data, adDetailsContainer);
+
+    // place bid handler
+    const newListingId = adDetails.data.id;
+    placeBidHandler(newListingId);
 
     // Get the container for more listings
     const container = document.getElementById("more-listings");

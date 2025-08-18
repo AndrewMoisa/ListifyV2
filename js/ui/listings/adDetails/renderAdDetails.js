@@ -34,7 +34,7 @@ export async function renderAdDetails(data, container) {
               Ends In: <span class="block text-secondary">${timeRemaining}</span>
             </p>
           </section>
-          <form class="mt-4 border-y-2 border-gray-300 py-4">
+          <div class="mt-4 border-y-2 border-gray-300 py-4" >
             <input
               type="number"
               name="bid"
@@ -50,7 +50,8 @@ export async function renderAdDetails(data, container) {
             >
               Place Bid
             </button>
-          </form>
+            <div id="bid-message"></div>
+          </div>
           <div class="border-b-2 border-gray-300 p-4">
             <p class="text-gray-700 text-center">
               <img
