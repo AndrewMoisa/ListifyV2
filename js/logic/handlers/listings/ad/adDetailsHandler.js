@@ -4,6 +4,8 @@ import { getQueryParam } from "../../../utils/getQueryParam.js";
 import { fetchAdDetails } from "../../../api/fetchAdDetails.js";
 import { renderAdDetails } from "../../../../ui/listings/adDetails/renderAdDetails.js";
 import { placeBidHandler } from "./placeBidHandler.js";
+import { deleteListingHandler } from "../deleteListingHandler.js";
+import { getUsername } from "../../../utils/storage.js";
 
 export async function adDetailsHandler(numberOfListings = 4) {
   try {
@@ -11,6 +13,7 @@ export async function adDetailsHandler(numberOfListings = 4) {
     const adDetailsContainer = document.getElementById("details-container");
     adDetailsContainer.innerHTML = ""; // Clear previous content
     const listingId = getQueryParam("id");
+
     if (!listingId) {
       console.error("Listing ID not found in query parameters");
       return;
@@ -22,6 +25,14 @@ export async function adDetailsHandler(numberOfListings = 4) {
     // place bid handler
     const newListingId = adDetails.data.id;
     placeBidHandler(newListingId);
+
+    // delete listing handler
+    const dataUser = adDetails.data.seller.name;
+    const user = getUsername();
+
+    if (dataUser === user) {
+      deleteListingHandler(adDetails.data);
+    }
 
     // Get the container for more listings
     const container = document.getElementById("more-listings");

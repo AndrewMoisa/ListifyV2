@@ -34,26 +34,8 @@ export async function renderAdDetails(data, container) {
               Ends In: <span class="block text-secondary">${timeRemaining}</span>
             </p>
           </section>
-          <div class="flex justify-around mt-4 border-t-2 border-gray-300 " >
-            <a
-              type="submit"
-                id="edit-listing"
-              class="mt-4 bg-accent text-white px-4 py-2 rounded hover:bg-primary-hover transition w-full text-center"
-              data-set="${data.id}"
-              href="/listings/form/edit.html?id=${data.id}"
-            >
-              Edit
-            </a>
-            <a
-              type="submit"
-                id="delete-listing"
-              class="mt-4 ml-2 bg-secondary text-white px-4 py-2 rounded hover:bg-primary-hover transition w-full text-center"
-              data-set="${data.id}"
-              href="/listings/ad.html?id=${data.id}"
-            >
-              Delete
-            </a>
-            <div id="bid-message"></div>
+          <div class="flex justify-around mt-4 border-t-2 border-gray-300" id="action-buttons">
+            
           </div>
           <div class="mt-4 border-y-2 border-gray-300 py-4" >
             <input
