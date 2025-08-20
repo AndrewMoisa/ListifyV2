@@ -10,6 +10,7 @@ import { profileWinsHandler } from "./logic/handlers/profile/profileWinsListings
 import { authUser } from "./logic/auth/auth.js";
 import { createListingsHandler } from "./logic/handlers/listings/createListingHandler.js";
 import { editListingsHandler } from "./logic/handlers/listings/editListingHandler.js";
+import { updateProfileHandler } from "./logic/handlers/profile/updateProfileHandler.js";
 
 function router() {
   const pathname = window.location.pathname;
@@ -63,6 +64,11 @@ function router() {
       mobileMenuToggle();
       authUser();
       editListingsHandler();
+      break;
+    case "/register/update.html":
+      mobileMenuToggle();
+      authUser();
+      updateProfileHandler();
       break;
   }
 }

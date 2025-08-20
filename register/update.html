@@ -10,7 +10,7 @@
     <meta name="author" content="Listify Team" />
     <link rel="icon" href="/assets/favicon.ico" />
 
-    <title>Listify | Login</title>
+    <title>Listify | Register</title>
     <link rel="stylesheet" href="../styles/input.css" />
     <script type="module" src="../js/app.js"></script>
   </head>
@@ -117,58 +117,64 @@
       </nav>
     </header>
     <main class="bg-gray-100 min-h-screen">
-      <article id="login" class="font-inter pt-10 m-2">
+      <article id="update-container" class="font-inter pt-10 m-2">
         <div class="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
-          <h1 class="text-2xl font-bold text-center mb-6">Log In</h1>
+          <h1 class="text-2xl font-bold text-center mb-6">Update Profile</h1>
           <img
-            src="/assets/login-illustration.jpg"
-            alt="Login Illustration"
+            src="/assets/register-illustration.jpg"
+            alt="Register Illustration"
             class="mx-auto mb-6"
           />
-          <form id="login-form" class="space-y-4">
+          <form id="register-form" class="space-y-4">
             <div>
-              <label for="email" class="block text-sm font-medium text-gray-700"
-                >Email</label
+              <label for="image" class="block text-sm font-medium text-gray-700"
+                >Profile Image URL</label
               >
               <input
                 type="text"
-                id="email"
-                name="email"
-                placeholder="Email"
-                pattern="^[^@]+@(stud\.|)(noroff\.no)$"
-                title="Please use a valid Noroff email address"
-                aria-describedby="emailHelp"
-                required
+                id="image"
+                name="avatar"
+                placeholder="Image URL"
                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
               />
             </div>
             <div>
               <label
-                for="password"
+                for="banner"
                 class="block text-sm font-medium text-gray-700"
-                >Password</label
+                >Profile Banner URL</label
               >
               <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Password"
-                minlength="8"
-                required
+                type="text"
+                id="banner"
+                name="banner"
+                placeholder="Banner URL"
                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
               />
+            </div>
+
+            <div>
+              <label for="bio" class="block text-sm font-medium text-gray-700"
+                >Description</label
+              >
+              <textarea
+                id="bio"
+                name="bio"
+                rows="3"
+                placeholder="Update your bio"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+              ></textarea>
             </div>
             <button
               type="submit"
               class="w-full bg-primary text-white hover:bg-primary-hover rounded-md py-2 transition duration-200"
             >
-              Log In
+              Register
             </button>
           </form>
-          <div id="message" class="mt-4 text-center text-sm"></div>
           <p class="mt-4 text-center text-sm text-gray-600">
-            Don't have an account?
-            <a href="/register" class="text-primary">Sign Up</a>
+            Already have an account?
+            <a href="/login/" class="text-primary">Log In</a>
           </p>
         </div>
       </article>
