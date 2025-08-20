@@ -59,16 +59,15 @@ async function submitForm(event) {
   try {
     button.disabled = true;
     await createListing(data);
-    // Clear the form after successful registration
-    // form.reset();
+    form.reset();
+    renderSuccessMessage(form, "Listing created successfully!");
+    setTimeout(() => {
+      window.location.href = "/listings/"; // Redirect to listings page after success
+    }, 2000); // Redirect after 2 seconds
   } catch (error) {
     console.error("Error creating listing:", error);
     renderErrorMessage(form, error.message);
   } finally {
     button.disabled = false;
-    renderSuccessMessage(form, "Listing created successfully!");
-    // setTimeout(() => {
-    //   window.location.href = "/listings/"; // Redirect to listings page after success
-    // }, 2000); // Redirect after 2 seconds
   }
 }

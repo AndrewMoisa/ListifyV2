@@ -25,16 +25,15 @@ async function submitForm(event) {
   try {
     button.disabled = true;
     await registerUser(data);
-    // Clear the form after successful registration
     form.reset();
+    renderSuccessMessage(form, "Registration successful! You can now log in.");
+    setTimeout(() => {
+      window.location.href = "/login/"; // Redirect to login page after success
+    }, 2000); // Redirect after 2 seconds
   } catch (error) {
     console.error("Error registering user:", error);
     renderErrorMessage(form, error.message);
   } finally {
     button.disabled = false;
-    renderSuccessMessage(form, "Registration successful! You can now log in.");
-    setTimeout(() => {
-      window.location.href = "/login/"; // Redirect to login page after success
-    }, 2000); // Redirect after 2 seconds
   }
 }

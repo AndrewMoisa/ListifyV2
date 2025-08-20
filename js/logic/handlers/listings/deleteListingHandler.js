@@ -16,8 +16,6 @@ export async function deleteListingHandler(data) {
 
     deleteBtn.addEventListener("click", async () => {
       const deleted = await deleteListing(id);
-
-      console.log("Delete response:", deleted);
       if (deleted.success) {
         container.innerHTML = "";
         renderSuccessMessage(container, "Listing deleted successfully.");
