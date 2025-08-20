@@ -1,12 +1,20 @@
-import { createListing } from "../../api/createListing.js";
 import {
   renderErrorMessage,
   renderSuccessMessage,
 } from "../../../ui/shared/displayMessage.js";
+import { editListing } from "../../api/editListing.js";
+import { getQueryParam } from "../../../logic/utils/getQueryParam.js";
 import { renderListingForm } from "../../../ui/listings/renderListingForm.js";
 
-export async function createListingsHandler() {
-  renderListingForm("Create listing");
+export async function editListingsHandler() {
+  renderListingForm("Edit listing");
+
+  document.getElementById("title").removeAttribute("required");
+  document.getElementById("tags").removeAttribute("required");
+  document.getElementById("mediaUrl").removeAttribute("required");
+  document.getElementById("mediaAlt").removeAttribute("required");
+  document.getElementById("description").removeAttribute("required");
+  document.getElementById("endsAt").removeAttribute("required");
 
   const form = document.querySelector("#listing-form");
 
@@ -17,9 +25,9 @@ export async function createListingsHandler() {
 
 async function submitForm(event) {
   event.preventDefault();
-
+  const dataId = getQueryParam("id");
+  console.log("Data ID from query:", dataId);
   const button = document.querySelector("#create-button");
-
   const form = event.target;
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
@@ -27,7 +35,11 @@ async function submitForm(event) {
 
   // Convert the date to ISO format
   const endsAtInput = form.querySelector("#endsAt");
-  data.endsAt = new Date(endsAtInput.value).toISOString();
+  if (endsAtInput.value) {
+    data.endsAt = new Date(endsAtInput.value).toISOString();
+  } else {
+    delete data.endsAt;
+  }
 
   if (typeof data.tags === "string") {
     data.tags = data.tags
@@ -58,9 +70,10 @@ async function submitForm(event) {
 
   try {
     button.disabled = true;
-    await createListing(data);
+    console.log("Submitting data:", data);
+    await editListing(data, dataId);
     // Clear the form after successful registration
-    // form.reset();
+    form.reset();
   } catch (error) {
     console.error("Error creating listing:", error);
     renderErrorMessage(form, error.message);

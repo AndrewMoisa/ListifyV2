@@ -9,6 +9,7 @@ import { profileListingsHandler } from "./logic/handlers/profile/profileListings
 import { profileWinsHandler } from "./logic/handlers/profile/profileWinsListings.js";
 import { authUser } from "./logic/auth/auth.js";
 import { createListingsHandler } from "./logic/handlers/listings/createListingHandler.js";
+import { editListingsHandler } from "./logic/handlers/listings/editListingHandler.js";
 
 function router() {
   const pathname = window.location.pathname;
@@ -53,10 +54,15 @@ function router() {
       profileListingsHandler();
       profileWinsHandler();
       break;
-    case "/listings/create.html":
+    case "/listings/form/create.html":
       mobileMenuToggle();
       authUser();
       createListingsHandler();
+      break;
+    case "/listings/form/edit.html":
+      mobileMenuToggle();
+      authUser();
+      editListingsHandler();
       break;
   }
 }
