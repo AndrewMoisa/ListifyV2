@@ -1,4 +1,4 @@
-import { getTimeRemaining } from "../../logic/utils/getTimeRemaining.js";
+import { startCountdown } from "../../logic/utils/getTimeRemaining.js";
 
 // Render function stays clean
 export async function renderListings(data, container) {
@@ -22,7 +22,6 @@ function createListingElement(listing) {
     "shadow-md"
   );
 
-  const timeRemaining = getTimeRemaining(listing.endsAt);
   const lastBid =
     Array.isArray(listing.bids) && listing.bids.length > 0
       ? listing.bids[listing.bids.length - 1].amount
@@ -51,6 +50,7 @@ function createListingElement(listing) {
   timePara.textContent = "Time remaining:";
 
   const timeSpan = document.createElement("span");
+  const timeRemaining = startCountdown(listing.endsAt, timeSpan);
   timeSpan.classList.add("font-medium", "block", "text-secondary");
   timeSpan.textContent = timeRemaining;
   timePara.appendChild(timeSpan);

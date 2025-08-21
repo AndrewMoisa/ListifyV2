@@ -5,9 +5,26 @@ export function getTimeRemaining(isoTime) {
 
   if (diff <= 0) return "Expired";
 
-  const minutes = Math.floor(diff / 1000 / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
+  const seconds = Math.floor(diff / 1000) % 60;
+  const minutes = Math.floor(diff / 1000 / 60) % 60;
+  const hours = Math.floor(diff / 1000 / 60 / 60) % 24;
+  const days = Math.floor(diff / 1000 / 60 / 60 / 24);
 
-  return `${days}d ${hours % 24}h ${minutes % 60}m remaining`;
+  return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+
+export function startCountdown(isoTime, element) {
+  function tick() {
+    const timeRemaining = getTimeRemaining(isoTime);
+    element.textContent = timeRemaining;
+
+    if (timeRemaining !== "Expired") {
+      // schedule next tick aligned with the next full second
+      const now = new Date();
+      const delay = 1000 - now.getMilliseconds();
+      setTimeout(tick, delay);
+    }
+  }
+
+  tick(); // render immediately
 }
