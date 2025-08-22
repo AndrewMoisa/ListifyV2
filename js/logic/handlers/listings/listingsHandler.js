@@ -33,6 +33,9 @@ export async function listingsHandler(
   } catch (error) {
     console.error("Error fetching listings:", error);
     // Display error to user
+    const container = document.querySelector("section");
+    const containerListings = document.getElementById("listings-container");
+    containerListings.innerHTML = "";
     renderErrorMessage(container, error.message);
   }
 }

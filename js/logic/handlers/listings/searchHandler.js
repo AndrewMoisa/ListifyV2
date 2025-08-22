@@ -9,6 +9,8 @@ export function searchHandler() {
   const searchInput = document.querySelector("#search-input");
   const searchButton = document.querySelector("#search-button");
   const listingsContainer = document.querySelector("#listings-container");
+  const btnContainer = document.querySelector("#load-more-container");
+  const container = document.querySelector("section");
 
   if (!searchInput || !searchButton || !listingsContainer) {
     console.error("Search elements not found");
@@ -16,7 +18,7 @@ export function searchHandler() {
   }
 
   let currentQuery = "";
-  let currentPage = 1; // Track search-specific pagination
+  let currentPage = 1;
 
   const handleSearch = async () => {
     const query = searchInput.value.trim();
@@ -33,7 +35,6 @@ export function searchHandler() {
     // Disable button and show loading state
     searchButton.disabled = true;
     searchButton.innerHTML = "Searching...";
-    listingsContainer.innerHTML = "Loading...";
 
     try {
       const result = await fetchSearch(query, 20, currentPage);
@@ -57,8 +58,10 @@ export function searchHandler() {
       searchInput.value = "";
       searchInput.placeholder = "Search...";
     } catch (error) {
-      renderErrorMessage(listingsContainer, error.message);
       console.error("Error fetching search results:", error);
+      btnContainer.innerHTML = "";
+      listingsContainer.innerHTML = "";
+      renderErrorMessage(container, error.message);
     } finally {
       // Restore button state
       searchButton.disabled = false;
