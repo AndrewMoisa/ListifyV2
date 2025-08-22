@@ -1,14 +1,22 @@
 import { fetchSearch } from "../../../logic/api/fetchSearch.js";
 import { renderListings } from "../../../ui/listings/renderListings.js";
 import { renderErrorMessage } from "../../../ui/shared/displayMessage.js";
+import { debounce } from "../../utils/debounce.js";
+import { resetPagination } from "../../utils/resetPagination.js";
+import { loadMoreBtn } from "../../../logic/shared/loadMoreBtn.js";
 
 export function searchHandler() {
   const searchInput = document.querySelector("#search-input");
   const searchButton = document.querySelector("#search-button");
   const listingsContainer = document.querySelector("#listings-container");
 
+  if (!searchInput || !searchButton || !listingsContainer) {
+    console.error("Search elements not found");
+    return;
+  }
+
   let currentQuery = "";
-  let scrollControl = null;
+  let currentPage = 1; // Track search-specific pagination
 
   const handleSearch = async () => {
     const query = searchInput.value.trim();
@@ -17,37 +25,55 @@ export function searchHandler() {
       return;
     }
 
+    // Reset pagination for new search
+    resetPagination(currentPage);
     currentQuery = query;
-    listingsContainer.innerHTML = "Loading..."; // Simple loading indicator
+    currentPage = 1;
+
+    // Disable button and show loading state
+    searchButton.disabled = true;
+    searchButton.innerHTML = "Searching...";
+    listingsContainer.innerHTML = "Loading...";
 
     try {
-      const searchPosts = await fetchSearchPage(currentQuery, 20, 1);
+      const result = await fetchSearch(query, 20, currentPage);
+      const { data: searchPosts, meta: metaPagination } = result;
       listingsContainer.innerHTML = "";
+
       renderListings(searchPosts, listingsContainer);
 
+      // Add "Load More" button for search results
+      loadMoreBtn(metaPagination, 20, async (numberOfListings, pageId) => {
+        currentPage = pageId; // Update search-specific page
+        const result = await fetchSearch(
+          currentQuery,
+          numberOfListings,
+          pageId
+        );
+        const { data: morePosts } = result;
+        renderListings(morePosts, listingsContainer);
+      });
+
       searchInput.value = "";
+      searchInput.placeholder = "Search...";
     } catch (error) {
-      listingsContainer.innerHTML = "";
-      renderErrorMessage(listingsContainer, "Failed to fetch search results.");
+      renderErrorMessage(listingsContainer, error.message);
       console.error("Error fetching search results:", error);
+    } finally {
+      // Restore button state
+      searchButton.disabled = false;
+      searchButton.textContent = "Search";
     }
   };
 
-  searchButton.addEventListener("click", handleSearch);
+  // Debounced click and Enter key handlers
+  const debouncedHandleSearch = debounce(handleSearch, 300);
+  searchButton.addEventListener("click", debouncedHandleSearch);
   searchInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") handleSearch();
+    if (e.key === "Enter") debouncedHandleSearch();
   });
 
   searchInput.addEventListener("focus", () => {
     searchInput.placeholder = "Search...";
   });
-
-  async function fetchSearchPage(query, page = 1, limit = 10) {
-    try {
-      const result = await fetchSearch(query, page, limit);
-      return result.data;
-    } catch (error) {
-      throw error;
-    }
-  }
 }
