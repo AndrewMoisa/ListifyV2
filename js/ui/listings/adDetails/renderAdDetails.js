@@ -1,7 +1,9 @@
 import { getTimeRemaining } from "../../../logic/utils/getTimeRemaining.js";
+import { modalHandler } from "../../../logic/shared/modalHandler.js";
 
 export async function renderAdDetails(data, container) {
   const adTitle = document.getElementById("ad-title");
+  const titleContainer = document.getElementById("ad-title-section");
   const title = data.title || "Ad Title";
   adTitle.textContent = data.title || "Ad Title";
   const description = data.description || "No description available.";
@@ -15,26 +17,53 @@ export async function renderAdDetails(data, container) {
       amount: bid.amount,
     })) || [];
 
-  container.innerHTML = ` 
-    
-        <img
-          class="w-full lg:max-w-2xl max-h-full bg-cover rounded-lg mb-4"
-          src="${imageUrl}" 
-          alt="${title}"
-        />
-        <a class="text-lg font-semibold text-text-primary mb-2 underline" href="/profile/?name=${
-          data.seller.name
-        }">Seller: ${data.seller.name}</a>
-        <div class="w-full lg:w-1/2">
-          <section
+  titleContainer.innerHTML += `
+    <a class="text-lg font-semibold text-text-primary mb-2 underline inline-block" href="/profile/?name=${data.seller.name}">Seller: ${data.seller.name}</a>
+  `;
+
+  container.innerHTML = `
+        <div class="xl:grow xl:basis-1/2">
+          <img
+             class="w-full lg:max-w-full h-96 lg:h-[600px] object-contain rounded-lg bg-gray-100 hover:transform hover:scale-105 transition-transform duration-300 hover:cursor-pointer hover:opacity-80"
+             id="auction-image"
+            src="${imageUrl}"
+            alt="${title}"
+          />
+        </div>
+        <!-- Modal -->
+<div
+  id="image-modal"
+  class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 hidden"
+>
+  <div class="relative max-w-4xl w-full p-4">
+    <!-- Close Button -->
+    <button
+      id="close-modal"
+      class="absolute top-2 right-5 text-white text-4xl font-bold hover:text-gray-300 hover:cursor-pointer"
+    >
+      &times;
+    </button>
+
+    <!-- Modal Image -->
+    <img
+      id="modal-image"
+      src="${imageUrl}"
+      alt="Expanded view of ${title}"
+      class="w-full max-h-[90vh] object-contain rounded-lg bg-black"
+    />
+  </div>
+</div>
+
+        <div class="xl:grow xl:basis-1/2 mt-2">
+          <div
             class="flex justify-between items-center bg-background p-4 rounded"
           >
             <p>Highest Bid: <span class="block text-accent">${currentBid} NOK</span></p>
             <p>
               Ends In: <span class="block text-secondary">${timeRemaining}</span>
             </p>
-          </section>
-          <div class="flex justify-around mt-4 border-t-2 border-gray-300" id="action-buttons">
+          </div>
+          <div class="flex justify-around" id="action-buttons">
             
           </div>
           <div class="mt-4 border-y-2 border-gray-300 py-4" >
@@ -64,7 +93,7 @@ export async function renderAdDetails(data, container) {
               />Item is located in Oslo, Norway
             </p>
           </div>
-          <section>
+          <div>
             <h2 class="text-base font-semibold text-text-primary m-2 uppercase">
               Bid History
             </h2>
@@ -85,14 +114,14 @@ export async function renderAdDetails(data, container) {
                 </li>`
               }
             </ul>
-          </section>
-          <section>
+          </div>
+          <div>
             <h2 class="text-base font-semibold text-text-primary m-2 uppercase">
               Description
             </h2>
             <p class="text-gray-700">
               ${description}
             </p>
-          </section>
-        </div>`;
+          </div>`;
+  modalHandler();
 }
