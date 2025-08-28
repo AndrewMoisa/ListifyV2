@@ -2,6 +2,12 @@ import { debounce } from "../../logic/utils/debounce.js";
 
 export function loadMoreBtn(metaPagination, numberOfListings, listingsHandler) {
   const loadMoreContainer = document.getElementById("load-more-container");
+
+  // Only show the button on listing pages
+  if (!window.location.href.includes("/listing")) {
+    return;
+  }
+
   if (!loadMoreContainer) {
     console.error("Load more container not found");
     return;

@@ -36,7 +36,7 @@ export function renderListingForm(action) {
     input.name = name;
     if (required) input.required = true;
     input.className =
-      "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm";
+      "mt-1 block w-full px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary placeholder:text-gray-400 placeholder:text-xs md:placeholder:text-sm";
 
     if (extra.placeholder) input.placeholder = extra.placeholder;
 
@@ -46,10 +46,15 @@ export function renderListingForm(action) {
   }
 
   // Add fields
-  form.appendChild(createField("Title", "text", "title", "title", true));
+  form.appendChild(
+    createField("Title", "text", "title", "title", true, {
+      placeholder: "e.g., Vintage Clock",
+    })
+  );
   form.appendChild(
     createField("Description", "textarea", "description", "description", true, {
       rows: 4,
+      placeholder: "e.g., A beautiful vintage clock in working condition.",
     })
   );
   form.appendChild(
@@ -70,7 +75,7 @@ export function renderListingForm(action) {
   button.id = "create-button";
   button.type = "submit";
   button.className =
-    "w-full bg-primary text-white hover:bg-primary-hover rounded-md py-2 transition duration-200";
+    "w-full text-sm bg-primary text-white hover:bg-primary-hover rounded-md py-2 transition duration-200";
   button.textContent = action;
 
   form.appendChild(button);

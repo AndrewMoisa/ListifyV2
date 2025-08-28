@@ -26,6 +26,7 @@ export async function listingsHandler(
     }
 
     // Render listings
+
     renderListings(listings, container);
 
     // Handle load more button

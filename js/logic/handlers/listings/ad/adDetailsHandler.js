@@ -11,7 +11,7 @@ export async function adDetailsHandler(numberOfListings = 4) {
   try {
     // render ad details
     const adDetailsContainer = document.getElementById("details-container");
-    adDetailsContainer.innerHTML = ""; // Clear previous content
+
     const listingId = getQueryParam("id");
 
     if (!listingId) {
@@ -20,6 +20,7 @@ export async function adDetailsHandler(numberOfListings = 4) {
     }
     const adDetails = await fetchAdDetails(listingId);
     console.log("Fetched ad details:", adDetails.data);
+    adDetailsContainer.innerHTML = ""; // Clear previous content
     renderAdDetails(adDetails.data, adDetailsContainer);
 
     // place bid handler
@@ -36,7 +37,7 @@ export async function adDetailsHandler(numberOfListings = 4) {
 
     // Get the container for more listings
     const container = document.getElementById("more-listings");
-    container.innerHTML = ""; // Clear previous content
+
     if (!container) {
       console.error("Listings container not found");
       return;
@@ -44,6 +45,7 @@ export async function adDetailsHandler(numberOfListings = 4) {
 
     const limit = numberOfListings; // Set the limit for listings
     const listingsIndex = await fetchListings(limit);
+    container.innerHTML = ""; // Clear previous content
     renderListings(listingsIndex.data, container);
   } catch (error) {
     console.error("Error fetching listings:", error);

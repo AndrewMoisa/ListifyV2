@@ -1,5 +1,9 @@
 export function getTimeRemaining(isoTime) {
+  if (!isoTime) return "Expired"; // handles null/undefined
+
   const target = new Date(isoTime);
+  if (isNaN(target.getTime())) return "Expired"; // handles invalid date
+
   const now = new Date();
   const diff = target - now;
 
@@ -16,15 +20,15 @@ export function getTimeRemaining(isoTime) {
 export function startCountdown(isoTime, element) {
   function tick() {
     const timeRemaining = getTimeRemaining(isoTime);
+
     element.textContent = timeRemaining;
 
     if (timeRemaining !== "Expired") {
-      // schedule next tick aligned with the next full second
       const now = new Date();
       const delay = 1000 - now.getMilliseconds();
       setTimeout(tick, delay);
     }
   }
 
-  tick(); // render immediately
+  tick();
 }

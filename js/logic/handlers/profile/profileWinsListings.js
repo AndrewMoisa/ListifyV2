@@ -10,6 +10,7 @@ export async function profileWinsHandler() {
 
   let url = `${baseUrl}profiles/${userName}/wins`;
   const container = document.querySelector("#won-listings-container");
+
   try {
     if (!userName) {
       throw new Error("Username not found in storage");
@@ -29,6 +30,7 @@ export async function profileWinsHandler() {
       return;
     }
 
+    container.innerHTML = "";
     renderListings(profileDetails.data, container);
 
     console.log("Fetched profile details:", profileDetails.data);

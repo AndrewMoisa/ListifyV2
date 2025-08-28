@@ -28,7 +28,7 @@ export async function profileListingsHandler() {
     }
 
     console.log("Fetched profile details:", profileDetails.data);
-
+    container.innerHTML = "";
     renderListings(profileDetails.data, container);
   } catch (error) {
     console.error("Error fetching profile details:", error);

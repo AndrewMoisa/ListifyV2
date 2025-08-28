@@ -5,8 +5,9 @@ import { baseUrl } from "../../constants/constants.js";
 import { getQueryParam } from "../../utils/getQueryParam.js";
 
 export async function profileDetailsHandler() {
-  const userName = getUsername();
+  const container = document.querySelector("#profile-details");
 
+  const userName = getUsername();
   const queryParams = getQueryParam("name");
 
   let url = `${baseUrl}profiles/${userName}?&_listings=true&_wins=true`;
@@ -21,11 +22,19 @@ export async function profileDetailsHandler() {
     }
 
     const profileDetails = await fetchProfileDetails(url);
+
+    console.log("Profile details response:", profileDetails);
     if (!profileDetails || !profileDetails.data) {
       throw new Error("Profile details not found");
     }
+    container.innerHTML = "";
+    renderProfileDetails(profileDetails.data, container);
 
-    renderProfileDetails(profileDetails.data);
+    const btn = document.getElementById("open-modal-btn");
+    if (userName === profileDetails.data.name) {
+      btn.classList.remove("hidden");
+    }
+
     console.log("Fetched profile details:", profileDetails.data);
   } catch (error) {
     console.error("Error fetching profile details:", error);

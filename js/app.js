@@ -52,8 +52,10 @@ function router() {
       mobileMenuToggle();
       authUser();
       profileDetailsHandler();
+      updateProfileHandler();
       profileListingsHandler();
       profileWinsHandler();
+
       break;
     case "/listings/form/create.html":
       mobileMenuToggle();
@@ -64,11 +66,6 @@ function router() {
       mobileMenuToggle();
       authUser();
       editListingsHandler();
-      break;
-    case "/register/update.html":
-      mobileMenuToggle();
-      authUser();
-      updateProfileHandler();
       break;
   }
 }

@@ -1,9 +1,19 @@
 import { updateProfile } from "../../api/updateProfile";
-import { renderErrorMessage } from "../../../ui/shared/displayMessage";
+import {
+  renderErrorMessage,
+  renderSuccessMessage,
+} from "../../../ui/shared/displayMessage.js";
 import { getUsername } from "../../utils/storage";
 
+import { renderModalForm } from "../../../ui/profile/renderModalForm.js";
+
 export function updateProfileHandler() {
-  const form = document.querySelector("#update-container");
+  const form = document.querySelector("#profile-modal");
+  const profileContainer = document.querySelector("#edit-profile");
+
+  renderModalForm(profileContainer);
+
+  console.log("Form element:", form);
 
   if (form) {
     form.addEventListener("submit", submitForm);
@@ -51,7 +61,10 @@ async function submitForm(event) {
     await updateProfile(transformedData, name);
     form.reset();
 
-    renderSuccessMessage(form, "Registration successful! You can now log in.");
+    renderSuccessMessage(
+      form,
+      "Profile edited successfully! Page will refresh."
+    );
     setTimeout(() => {
       window.location.href = "/profile/"; // Redirect to profile page after success
     }, 2000); // Redirect after 2 seconds
