@@ -1,5 +1,4 @@
-export function renderBidInfo(bid) {
-  const bidContainer = document.getElementById("bid-message");
+export function renderBidInfo(bid, bidContainer) {
   if (bid.errors && bid.errors.length > 0) {
     const bidResponse = bid.errors[0].message;
 
@@ -18,6 +17,7 @@ export function renderBidInfo(bid) {
     bidContainer.appendChild(div);
   } else {
     // render success message
+    bidContainer.innerHTML = "";
     const div = document.createElement("div");
     div.className = "border-t border-gray-300 py-2";
     const p = document.createElement("p");

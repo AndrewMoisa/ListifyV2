@@ -25,7 +25,7 @@ export async function profileWinsHandler() {
     console.log(profileDetails);
 
     if (profileDetails.data.length === 0) {
-      container.innerHTML +=
+      container.innerHTML =
         "<p class='text-gray-500'>No won listings found.</p>";
       return;
     }

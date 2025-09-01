@@ -10,10 +10,8 @@ export async function createListing(data) {
   const json = await response.json();
 
   if (!response.ok) {
-    throw new Error(`Error creating listing: ${json.message}`);
+    throw new Error(`Error creating listing: ${json.errors?.[0]?.message}`);
   }
-
-  console.log("Listing created successfully:", json);
 
   return json;
 }

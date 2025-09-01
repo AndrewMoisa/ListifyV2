@@ -3,6 +3,7 @@ export function displayMessage(container, message, type = "success") {
   messageElement.classList.add(
     type === "success" ? "success-message" : "error-message",
     "p-4",
+    "my-2",
     type === "success" ? "bg-green-100" : "bg-red-100",
     "w-full",
     "border",

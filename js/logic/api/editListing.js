@@ -13,7 +13,5 @@ export async function editListing(data, id) {
     throw new Error(`Error updating listing: ${json.errors?.[0]?.message}`);
   }
 
-  console.log("Listing updated successfully:", json);
-
   return json;
 }

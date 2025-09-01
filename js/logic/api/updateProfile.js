@@ -15,7 +15,5 @@ export async function updateProfile(data, name) {
     throw new Error(`Error updating profile: ${json.errors?.[0]?.message}`);
   }
 
-  console.log("Profile updated successfully:", json);
-
   return json;
 }

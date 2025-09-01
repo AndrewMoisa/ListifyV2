@@ -1,5 +1,6 @@
 import { modalHandler } from "../../../logic/shared/modalHandler.js";
 import { startCountdown } from "../../../logic/utils/getTimeRemaining.js";
+import { getBids } from "../../../logic/utils/getBids.js";
 
 export async function renderAdDetails(data, container) {
   const adTitle = document.getElementById("ad-title");
@@ -8,25 +9,9 @@ export async function renderAdDetails(data, container) {
   adTitle.textContent = data.title || "Ad Title";
   const description = data.description || "No description available.";
   const imageUrl = data.media?.[0]?.url || "../assets/placeholder-image.png";
-  const currentBid =
-    data.bids?.length > 0 ? data.bids[data.bids.length - 1].amount : 0;
-  const bids =
-    data.bids?.map((bid) => ({
-      name: bid.bidder.name,
-      amount: bid.amount,
-    })) || [];
-
-  bids.sort((a, b) => {
-    // Sort by amount first (ascending)
-    if (a.amount !== b.amount) {
-      return a.amount - b.amount;
-    }
-    // If amounts are equal, sort by name (ascending)
-    return a.name.localeCompare(b.name);
-  });
-
+  const bids = getBids(data.bids);
   const lastFiveBids = bids.slice(-5);
-
+  const currentBid = bids.slice(-1)[0]?.amount;
   const endsAt = data.endsAt;
 
   createAuctionDisplay(

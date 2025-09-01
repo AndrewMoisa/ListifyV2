@@ -1,4 +1,5 @@
 import { startCountdown } from "../../logic/utils/getTimeRemaining.js";
+import { getBids } from "../../logic/utils/getBids.js";
 
 // Render function stays clean
 export async function renderListings(data, container) {
@@ -10,6 +11,9 @@ export async function renderListings(data, container) {
 
 // Reusable function to create a listing DOM element
 function createListingElement(listing) {
+  const bids = getBids(listing.bids);
+  const lastBid = bids.slice(-1)[0]?.amount || 0;
+
   const listingElement = document.createElement("div");
   listingElement.classList.add(
     "listing-item",
@@ -19,11 +23,6 @@ function createListingElement(listing) {
     "rounded-sm",
     "shadow-md"
   );
-
-  const lastBid =
-    Array.isArray(listing.bids) && listing.bids.length > 0
-      ? listing.bids[listing.bids.length - 1].amount
-      : 0;
 
   // Image
   const img = document.createElement("img");

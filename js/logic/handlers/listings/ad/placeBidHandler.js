@@ -1,28 +1,54 @@
 import { placeBid } from "../../../api/placeBid.js";
 import { renderBidInfo } from "../../../../ui/listings/adDetails/renderBidMessage.js";
+import { renderErrorMessage } from "../../../../ui/shared/displayMessage.js";
+
 export async function placeBidHandler(id) {
-  try {
-    const placeBidBtn = document.getElementById("place-bid");
+  const placeBidBtn = document.getElementById("place-bid");
+  const placeBidInput = document.getElementById("bid");
+  const bidContainer = document.getElementById("bid-message");
 
-    placeBidBtn.disabled = false; // Disable the button while processing
-    const placeBidInput = document.getElementById("bid");
+  // Validate DOM elements
+  if (!placeBidBtn || !placeBidInput || !bidContainer) {
+    throw new Error(
+      "Bid button, input field, or bid container not found in DOM"
+    );
+  }
 
-    placeBidBtn.addEventListener("click", async () => {
-      const bidValue = placeBidInput.value;
+  // Validate listing ID
+  if (!id) {
+    throw new Error("Listing ID not provided");
+  }
 
-      const bidAmount = Number(bidValue);
-      console.log(bidAmount);
+  // Enable button initially
+  placeBidBtn.disabled = false;
 
-      if (!id) {
-        console.error("Listing ID not found in query parameters");
-        return;
-      }
+  // Remove existing listeners to prevent duplication
+  const handler = async () => {
+    const bidValue = placeBidInput.value;
+    const bidAmount = Number(bidValue);
+
+    try {
+      // Disable button and show loading state
+      placeBidBtn.disabled = true;
+      placeBidBtn.textContent = "Placing Bid...";
 
       const bidPlaced = await placeBid(id, { amount: bidAmount });
+      renderBidInfo(bidPlaced, bidContainer);
 
-      renderBidInfo(bidPlaced);
-    });
-  } catch (error) {
-    console.error("Error placing bid:", error);
-  }
+      // Clear input after successful bid
+      placeBidInput.value = "";
+    } catch (error) {
+      console.error("Error placing bid:", error);
+      bidContainer.innerHTML = "";
+      renderErrorMessage(bidContainer, error.message);
+    } finally {
+      // Re-enable button
+      placeBidBtn.disabled = false;
+      placeBidBtn.textContent = "Place Bid";
+    }
+  };
+
+  // Remove any existing listeners
+  placeBidBtn.removeEventListener("click", handler);
+  placeBidBtn.addEventListener("click", handler);
 }

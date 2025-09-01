@@ -6,26 +6,34 @@ import { renderAdDetails } from "../../../../ui/listings/adDetails/renderAdDetai
 import { placeBidHandler } from "./placeBidHandler.js";
 import { deleteListingHandler } from "../deleteListingHandler.js";
 import { getUsername } from "../../../utils/storage.js";
+import { renderErrorMessage } from "../../../../ui/shared/displayMessage.js";
 
 export async function adDetailsHandler(numberOfListings = 4) {
+  // Get the container for ad details
+  const adDetailsContainer = document.getElementById("details-container");
+
+  // Get the container for more listings
+  const container = document.getElementById("more-listings");
   try {
-    // render ad details
-    const adDetailsContainer = document.getElementById("details-container");
-
-    const listingId = getQueryParam("id");
-
-    if (!listingId) {
-      console.error("Listing ID not found in query parameters");
-      return;
+    if (!adDetailsContainer || !container) {
+      throw new Error("Required DOM elements not found");
     }
+
+    // render ad details
+    const listingId = getQueryParam("id");
+    if (!listingId) {
+      throw new Error("Listing ID not found in query parameters");
+    }
+
+    // render ad details
     const adDetails = await fetchAdDetails(listingId);
-    console.log("Fetched ad details:", adDetails.data);
+    console.log("Ad Details:", adDetails);
     adDetailsContainer.innerHTML = ""; // Clear previous content
     renderAdDetails(adDetails.data, adDetailsContainer);
 
     // place bid handler
     const newListingId = adDetails.data.id;
-    placeBidHandler(newListingId);
+    await placeBidHandler(newListingId);
 
     // delete listing handler
     const dataUser = adDetails.data.seller.name;
@@ -35,19 +43,15 @@ export async function adDetailsHandler(numberOfListings = 4) {
       deleteListingHandler(adDetails.data);
     }
 
-    // Get the container for more listings
-    const container = document.getElementById("more-listings");
+    const limit = numberOfListings;
+    const listingsResponse = await fetchListings(limit);
 
-    if (!container) {
-      console.error("Listings container not found");
-      return;
-    }
-
-    const limit = numberOfListings; // Set the limit for listings
-    const listingsIndex = await fetchListings(limit);
     container.innerHTML = ""; // Clear previous content
-    renderListings(listingsIndex.data, container);
+    renderListings(listingsResponse.data, container);
   } catch (error) {
-    console.error("Error fetching listings:", error);
+    console.error("Error in adDetailsHandler:", error);
+    adDetailsContainer.innerHTML = "";
+    container.innerHTML = "";
+    renderErrorMessage(adDetailsContainer, error);
   }
 }
