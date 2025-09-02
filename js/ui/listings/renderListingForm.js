@@ -1,7 +1,11 @@
 export function renderListingForm(action) {
-  const aside = document.createElement("aside");
+  const aside = document.createElement("section");
   aside.className = "flex flex-col max-w-7xl mx-auto p-4";
   aside.id = "form-container";
+
+  const errorDiv = document.createElement("div");
+  errorDiv.id = "error-message";
+  errorDiv.className = "text-red-500 text-sm";
 
   const form = document.createElement("form");
   form.id = "listing-form";
@@ -80,6 +84,7 @@ export function renderListingForm(action) {
 
   form.appendChild(button);
   aside.appendChild(form);
+  aside.appendChild(errorDiv);
 
   const main = document.querySelector("main");
   main.appendChild(aside);

@@ -11,7 +11,10 @@ export async function renderAdDetails(data, container) {
   const imageUrl = data.media?.[0]?.url || "../assets/placeholder-image.png";
   const bids = getBids(data.bids);
   const lastFiveBids = bids.slice(-5);
-  const currentBid = bids.slice(-1)[0]?.amount;
+  let currentBid = bids.slice(-1)[0]?.amount;
+  if (!currentBid) {
+    currentBid = 0;
+  }
   const endsAt = data.endsAt;
 
   createAuctionDisplay(
