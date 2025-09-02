@@ -5,11 +5,11 @@ import {
 import { editListing } from "../../api/editListing.js";
 import { getQueryParam } from "../../../logic/utils/getQueryParam.js";
 import { renderListingForm } from "../../../ui/listings/renderListingForm.js";
+import { processMedia } from "../../utils/processMedia.js";
 
 export async function editListingsHandler() {
-  renderListingForm("Edit listing");
+  renderListingForm("Edit");
 
-  document.getElementById("title").removeAttribute("required");
   document.getElementById("tags").removeAttribute("required");
   document.getElementById("mediaUrl").removeAttribute("required");
   document.getElementById("mediaAlt").removeAttribute("required");
@@ -31,7 +31,6 @@ async function submitForm(event) {
   const form = event.target;
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
-  console.log("Form data:", data);
 
   // Convert the date to ISO format
   const endsAtInput = form.querySelector("#endsAt");
@@ -48,40 +47,23 @@ async function submitForm(event) {
       .filter(Boolean); // Remove empty strings
   }
 
-  if (data.mediaUrl || data.mediaAlt) {
-    const mediaItem = {};
-
-    if (data.mediaUrl) {
-      mediaItem.url = data.mediaUrl.trim();
-    }
-
-    if (data.mediaAlt) {
-      mediaItem.alt = data.mediaAlt.trim();
-    }
-
-    data.media = [mediaItem]; // Wrap in an array
-
-    delete data.mediaUrl;
-    delete data.mediaAlt;
-  } else {
-    delete data.mediaUrl;
-    delete data.mediaAlt;
-  }
+  processMedia(data);
 
   try {
     button.disabled = true;
-    console.log("Submitting data:", data);
+    button.textContent = "Saving...";
     await editListing(data, dataId);
     // Clear the form after successful registration
     form.reset();
-    renderSuccessMessage(form, "Listing created successfully!");
+    renderSuccessMessage(form, "Listing updated successfully!");
     setTimeout(() => {
-      window.location.href = "/listings/"; // Redirect to listings page after success
-    }, 2000); // Redirect after 2 seconds
+      window.location.href = "/listings/ad.html?id=" + dataId; // Redirect to listings page after success
+    }, 1500); // Redirect after 1.5 seconds
   } catch (error) {
-    console.error("Error creating listing:", error);
+    console.error("Error updating listing:", error);
     renderErrorMessage(form, error.message);
   } finally {
     button.disabled = false;
+    button.textContent = "Edit";
   }
 }
