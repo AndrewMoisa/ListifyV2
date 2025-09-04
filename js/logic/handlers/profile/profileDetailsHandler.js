@@ -17,13 +17,11 @@ export async function profileDetailsHandler() {
     }
 
     if (queryParams) {
-      console.log("Using query param for username:", queryParams);
       url = `${baseUrl}profiles/${queryParams}?&_listings=true&_wins=true`;
     }
 
     const profileDetails = await fetchProfileDetails(url);
 
-    console.log("Profile details response:", profileDetails);
     if (!profileDetails || !profileDetails.data) {
       throw new Error("Profile details not found");
     }

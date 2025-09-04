@@ -3,15 +3,20 @@ import { getUsername } from "../../utils/storage.js";
 import { renderListings } from "../../../ui/listings/renderListings.js";
 import { baseUrl } from "../../constants/constants.js";
 import { getQueryParam } from "../../utils/getQueryParam.js";
+import { renderErrorMessage } from "../../../ui/shared/displayMessage.js";
 
 export async function profileListingsHandler() {
   const userName = getUsername();
   const queryName = getQueryParam("name");
 
   let url = `${baseUrl}profiles/${userName}/listings`;
-  const container = document.querySelector("#bidded-listings-container");
+  const container = document.querySelector("#bid-listings-container");
 
   try {
+    if (!container) {
+      throw new Error("Listings container not found in DOM");
+    }
+
     if (!userName) {
       throw new Error("Username not found in storage");
     }
@@ -32,5 +37,7 @@ export async function profileListingsHandler() {
     renderListings(profileDetails.data, container);
   } catch (error) {
     console.error("Error fetching profile details:", error);
+    container.innerHTML = "";
+    renderErrorMessage(container, error.message);
   }
 }

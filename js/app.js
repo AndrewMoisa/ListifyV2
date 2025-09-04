@@ -55,7 +55,6 @@ function router() {
       updateProfileHandler();
       profileListingsHandler();
       profileWinsHandler();
-
       break;
     case "/listings/form/create.html":
       mobileMenuToggle();
