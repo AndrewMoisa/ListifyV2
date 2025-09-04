@@ -1,23 +1,29 @@
-import { updateProfile } from "../../api/updateProfile";
+import { updateProfile } from "../../api/updateProfile.js";
 import {
   renderErrorMessage,
   renderSuccessMessage,
 } from "../../../ui/shared/displayMessage.js";
-import { getUsername } from "../../utils/storage";
-
+import { getUsername } from "../../utils/storage.js";
 import { renderModalForm } from "../../../ui/profile/renderModalForm.js";
+import {
+  setupFormValidation,
+  transformProfileData,
+} from "../../utils/formUtils.js";
 
 export function updateProfileHandler() {
-  const form = document.querySelector("#profile-modal");
   const profileContainer = document.querySelector("#edit-profile");
-
   renderModalForm(profileContainer);
 
-  console.log("Form element:", form);
+  // Set up form after rendering (with a short delay to ensure DOM is ready)
+  setTimeout(() => {
+    const form = document.querySelector("#register-form");
 
-  if (form) {
-    form.addEventListener("submit", submitForm);
-  }
+    // Set up validation with our utility function
+    if (form) {
+      setupFormValidation(form);
+      form.addEventListener("submit", submitForm);
+    }
+  }, 100);
 }
 
 async function submitForm(event) {
@@ -27,34 +33,17 @@ async function submitForm(event) {
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
   const button = form.querySelector("button");
-  console.log("Form data:", data);
+  const errorDiv = document.querySelector("#form-error-message");
+  const profileForm = document.querySelector("#profile-form");
 
-  // Transform data to match API structure
-  const transformedData = {
-    bio: data.bio || "", // Use empty string if bio is undefined
-  };
-
-  // Only include avatar if it exists and is not empty
-  if (data.avatar && data.avatar !== "") {
-    transformedData.avatar = {
-      url: data.avatar,
-      alt: data.avatarAlt || "", // Use provided alt text or empty string
-    };
+  // Validate form has at least one value
+  if (!data.bio && !data.avatar && !data.banner) {
+    renderErrorMessage(errorDiv, "Please fill in at least one field to update");
+    return;
   }
 
-  // Only include banner if it exists and is not empty
-  if (data.banner && data.banner !== "") {
-    transformedData.banner = {
-      url: data.banner,
-      alt: data.bannerAlt || "", // Use provided alt text or empty string
-    };
-  }
-
-  if (data.bio === "" && data.avatar === "" && data.banner === "") {
-    delete data.bio;
-    delete data.avatar;
-    delete data.banner;
-  }
+  // Transform data using our utility function
+  const transformedData = transformProfileData(data);
 
   try {
     button.disabled = true;
@@ -62,15 +51,17 @@ async function submitForm(event) {
     form.reset();
 
     renderSuccessMessage(
-      form,
+      profileForm,
       "Profile edited successfully! Page will refresh."
     );
+
     setTimeout(() => {
-      window.location.href = "/profile/"; // Redirect to profile page after success
-    }, 2000); // Redirect after 2 seconds
+      window.location.href = "/profile/";
+    }, 1500);
   } catch (error) {
-    console.error("Error registering user:", error);
-    renderErrorMessage(form, error.message);
+    console.error("Error updating profile:", error);
+    errorDiv.innerHTML = "";
+    renderErrorMessage(errorDiv, error.message);
   } finally {
     button.disabled = false;
   }

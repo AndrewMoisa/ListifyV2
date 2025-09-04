@@ -3,12 +3,14 @@ import {
   renderErrorMessage,
   renderSuccessMessage,
 } from "../../ui/shared/displayMessage.js";
+import { setupFormValidation } from "../utils/formUtils.js";
 
 export function registerHandler() {
   const form = document.querySelector("#register-form");
 
   if (form) {
     form.addEventListener("submit", submitForm);
+    setupFormValidation(form, "button", "input, textarea");
   }
 }
 
@@ -18,7 +20,6 @@ async function submitForm(event) {
   const form = event.target;
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
-  console.log("Form data:", data);
 
   const button = form.querySelector("button");
 

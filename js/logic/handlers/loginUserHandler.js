@@ -4,12 +4,14 @@ import {
   renderSuccessMessage,
   renderErrorMessage,
 } from "../../ui/shared/displayMessage.js";
+import { setupFormValidation } from "../utils/formUtils.js";
 
 export function loginHandler() {
   const form = document.querySelector("#login-form");
 
   if (form) {
     form.addEventListener("submit", submitForm);
+    setupFormValidation(form, "button", "input, textarea");
   }
 }
 
@@ -20,18 +22,13 @@ async function submitForm(event) {
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
 
-  console.log(data);
-
   const button = form.querySelector("button");
   const messageElement = document.querySelector("#message");
 
   try {
     button.textContent = "Loading...";
     const response = await loginUser(data);
-    console.log(response);
     const { data: userData } = response;
-
-    console.log(userData);
     const { accessToken, name } = userData;
 
     saveToken(accessToken);

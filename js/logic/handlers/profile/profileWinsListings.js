@@ -7,11 +7,13 @@ import { getQueryParam } from "../../utils/getQueryParam.js";
 export async function profileWinsHandler() {
   const userName = getUsername();
   const queryName = getQueryParam("name");
-
-  let url = `${baseUrl}profiles/${userName}/wins`;
   const container = document.querySelector("#won-listings-container");
 
   try {
+    let url = `${baseUrl}profiles/${userName}/wins`;
+    if (!container) {
+      throw new Error("Container element not found");
+    }
     if (!userName) {
       throw new Error("Username not found in storage");
     }
@@ -22,8 +24,6 @@ export async function profileWinsHandler() {
 
     const profileDetails = await fetchProfileDetails(url);
 
-    console.log(profileDetails);
-
     if (profileDetails.data.length === 0) {
       container.innerHTML =
         "<p class='text-gray-500'>No won listings found.</p>";
@@ -32,9 +32,9 @@ export async function profileWinsHandler() {
 
     container.innerHTML = "";
     renderListings(profileDetails.data, container);
-
-    console.log("Fetched profile details:", profileDetails.data);
   } catch (error) {
     console.error("Error fetching profile details:", error);
+    container.innerHTML = "";
+    renderErrorMessage(container, error.message);
   }
 }

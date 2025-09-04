@@ -10,8 +10,8 @@ export async function listingsHandler(
   numberOfListings = 4,
   pageId = currentPage
 ) {
+  const container = document.getElementById("listings-container");
   try {
-    const container = document.getElementById("listings-container");
     if (!container) {
       throw new Error("Listings container not found");
     }
@@ -34,7 +34,6 @@ export async function listingsHandler(
   } catch (error) {
     console.error("Error fetching listings:", error);
     // Display error to user
-    const container = document.querySelector("section");
     const containerListings = document.getElementById("listings-container");
     containerListings.innerHTML = "";
     renderErrorMessage(container, error.message);

@@ -5,6 +5,7 @@ import {
 } from "../../../ui/shared/displayMessage.js";
 import { renderListingForm } from "../../../ui/listings/renderListingForm.js";
 import { processMedia } from "../../utils/processMedia.js";
+import { setupFormValidation } from "../../utils/formUtils.js";
 
 export async function createListingsHandler() {
   renderListingForm("Create listing");
@@ -13,6 +14,7 @@ export async function createListingsHandler() {
 
   if (form) {
     form.addEventListener("submit", submitForm);
+    setupFormValidation(form, "#create-button", "input, textarea, select");
   }
 }
 
@@ -48,7 +50,7 @@ async function submitForm(event) {
     renderSuccessMessage(form, "Listing created successfully!");
     setTimeout(() => {
       window.location.href = "/profile/"; // Redirect to profile page after success
-    }, 2000); // Redirect after 2 seconds
+    }, 1500); // Redirect after 1.5 seconds
   } catch (error) {
     console.error("Error creating listing:", error);
     errorDiv.innerHTML = "";
