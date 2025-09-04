@@ -3,6 +3,7 @@ import { getUsername } from "../../utils/storage.js";
 import { renderProfileDetails } from "../../../ui/profile/renderProfileDetails.js";
 import { baseUrl } from "../../constants/constants.js";
 import { getQueryParam } from "../../utils/getQueryParam.js";
+import { renderErrorMessage } from "../../../ui/shared/displayMessage.js";
 
 export async function profileDetailsHandler() {
   const container = document.querySelector("#profile-details");
@@ -12,18 +13,23 @@ export async function profileDetailsHandler() {
 
   let url = `${baseUrl}profiles/${userName}?&_listings=true&_wins=true`;
   try {
-    if (!userName) {
-      throw new Error("Username not found in storage");
+    if (!container) {
+      console.error("Profile details container not found in DOM");
+      return;
     }
 
     if (queryParams) {
-      console.log("Using query param for username:", queryParams);
       url = `${baseUrl}profiles/${queryParams}?&_listings=true&_wins=true`;
+    }
+
+    if (!userName && !queryParams) {
+      throw new Error(
+        "No username provided. Please log in or specify a profile."
+      );
     }
 
     const profileDetails = await fetchProfileDetails(url);
 
-    console.log("Profile details response:", profileDetails);
     if (!profileDetails || !profileDetails.data) {
       throw new Error("Profile details not found");
     }
@@ -34,9 +40,9 @@ export async function profileDetailsHandler() {
     if (userName === profileDetails.data.name) {
       btn.classList.remove("hidden");
     }
-
-    console.log("Fetched profile details:", profileDetails.data);
   } catch (error) {
     console.error("Error fetching profile details:", error);
+    container.innerHTML = "";
+    renderErrorMessage(container, error.message);
   }
 }
