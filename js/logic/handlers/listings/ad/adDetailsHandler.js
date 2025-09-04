@@ -27,7 +27,6 @@ export async function adDetailsHandler(numberOfListings = 4) {
 
     // render ad details
     const adDetails = await fetchAdDetails(listingId);
-    console.log("Ad Details:", adDetails);
     adDetailsContainer.innerHTML = ""; // Clear previous content
     renderAdDetails(adDetails.data, adDetailsContainer);
 

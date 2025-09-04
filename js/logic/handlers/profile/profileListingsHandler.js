@@ -31,8 +31,6 @@ export async function profileListingsHandler() {
       container.innerHTML = "<p class='text-gray-500'>No listings found.</p>";
       return;
     }
-
-    console.log("Fetched profile details:", profileDetails.data);
     container.innerHTML = "";
     renderListings(profileDetails.data, container);
   } catch (error) {
