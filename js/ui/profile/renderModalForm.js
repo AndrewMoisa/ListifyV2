@@ -6,7 +6,7 @@ export function renderModalForm(container) {
     </button>
 
     <!-- Modal -->
-    <div id="profile-modal" class="fixed inset-0  backdrop-blur-lg bg-opacity-50 flex items-center justify-center hidden">
+    <div id="profile-modal" class="fixed inset-0  backdrop-blur-lg bg-opacity-50 flex items-center justify-center hidden z-50">
         <div class="bg-white rounded-lg shadow-lg p-4 w-full max-w-md m-2" id="profile-form">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold">Edit Profile</h2>

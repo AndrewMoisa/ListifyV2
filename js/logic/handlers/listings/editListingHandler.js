@@ -6,10 +6,12 @@ import { editListing } from "../../api/editListing.js";
 import { getQueryParam } from "../../../logic/utils/getQueryParam.js";
 import { renderListingForm } from "../../../ui/listings/renderListingForm.js";
 import { processMedia } from "../../utils/processMedia.js";
+import { setupFormValidation } from "../../utils/formUtils.js";
 
 export async function editListingsHandler() {
   renderListingForm("Edit");
-
+  // Remove 'required' attributes for editing
+  document.getElementById("title").removeAttribute("required");
   document.getElementById("tags").removeAttribute("required");
   document.getElementById("mediaUrl").removeAttribute("required");
   document.getElementById("mediaAlt").removeAttribute("required");
@@ -20,6 +22,7 @@ export async function editListingsHandler() {
 
   if (form) {
     form.addEventListener("submit", submitForm);
+    setupFormValidation(form, "#create-button", "input, textarea, select");
   }
 }
 
