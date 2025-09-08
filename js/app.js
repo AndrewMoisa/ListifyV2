@@ -12,61 +12,72 @@ import { createListingsHandler } from "./logic/handlers/listings/createListingHa
 import { editListingsHandler } from "./logic/handlers/listings/editListingHandler.js";
 import { updateProfileHandler } from "./logic/handlers/profile/updateProfileHandler.js";
 
-function router() {
-  const pathname = window.location.pathname;
+// Define routes in one place
+const routes = {
+  "/": () => {
+    mobileMenuToggle();
+    authUser();
+    changeReview();
+    listingsHandler();
+  },
+  "/listings": () => {
+    mobileMenuToggle();
+    authUser();
+    listingsHandler(20);
+    searchHandler();
+  },
+  "/listings/ad": () => {
+    mobileMenuToggle();
+    authUser();
+    adDetailsHandler();
+  },
+  "/register": () => {
+    mobileMenuToggle();
+    authUser();
+    registerHandler();
+  },
+  "/login": () => {
+    mobileMenuToggle();
+    authUser();
+    loginHandler();
+  },
+  "/profile": () => {
+    mobileMenuToggle();
+    authUser();
+    profileDetailsHandler();
+    updateProfileHandler();
+    profileListingsHandler();
+    profileWinsHandler();
+  },
+  "/listings/form/create": () => {
+    mobileMenuToggle();
+    authUser();
+    createListingsHandler();
+  },
+  "/listings/form/edit": () => {
+    mobileMenuToggle();
+    authUser();
+    editListingsHandler();
+  },
+};
 
-  switch (pathname) {
-    case "/":
-    case "/index.html":
-      mobileMenuToggle();
-      authUser();
-      changeReview();
-      listingsHandler();
-      break;
-    case "/listings/index.html":
-    case "/listings/":
-      mobileMenuToggle();
-      authUser();
-      listingsHandler(20); // Fetch more listings for the listings page
-      searchHandler();
-      break;
-    case "/listings/ad.html":
-      mobileMenuToggle();
-      authUser();
-      adDetailsHandler();
-      break;
-    case "/register/index.html":
-    case "/register/":
-      mobileMenuToggle();
-      authUser();
-      registerHandler();
-      break;
-    case "/login/index.html":
-    case "/login/":
-      mobileMenuToggle();
-      authUser();
-      loginHandler();
-      break;
-    case "/profile/index.html":
-    case "/profile/":
-      mobileMenuToggle();
-      authUser();
-      profileDetailsHandler();
-      updateProfileHandler();
-      profileListingsHandler();
-      profileWinsHandler();
-      break;
-    case "/listings/form/create.html":
-      mobileMenuToggle();
-      authUser();
-      createListingsHandler();
-      break;
-    case "/listings/form/edit.html":
-      mobileMenuToggle();
-      authUser();
-      editListingsHandler();
-      break;
-  }
+// Router function
+function router() {
+  const path = window.location.pathname.replace(/\/+$/, ""); // strip trailing /
+  const route = routes[path] || routes["/"]; // fallback to home
+  route();
 }
 
 router();
+
+// Handle back/forward
+window.addEventListener("popstate", router);
+
+// Optional: intercept clicks on links (to avoid reloads)
+document.addEventListener("click", (e) => {
+  if (e.target.matches("a[data-link]")) {
+    e.preventDefault();
+    history.pushState(null, null, e.target.href);
+    router();
+  }
+});
