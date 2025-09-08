@@ -5,6 +5,10 @@ export function authUser() {
   const loginLinkMobile = document.getElementById("login-link-mobile");
   const profileLinkMobile = document.getElementById("profile-link-mobile");
   const profileLink = document.getElementById("profile-link");
+  const createListing = document.getElementById("create-listing-link");
+  const createListingMobile = document.getElementById(
+    "create-listing-link-mobile"
+  );
 
   const userName = getUsername();
 
@@ -29,5 +33,7 @@ export function authUser() {
   if (!userName) {
     profileLinkMobile.style.display = "none";
     profileLink.style.display = "none";
+    createListing.style.display = "none";
+    createListingMobile.style.display = "none";
   }
 }

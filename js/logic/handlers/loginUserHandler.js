@@ -5,6 +5,7 @@ import {
   renderErrorMessage,
 } from "../../ui/shared/displayMessage.js";
 import { setupFormValidation } from "../utils/formUtils.js";
+import { getUserFriendlyErrorMessage } from "../utils/errorUtils.js";
 
 export function loginHandler() {
   const form = document.querySelector("#login-form");
@@ -41,7 +42,8 @@ async function submitForm(event) {
     }, 2000);
   } catch (error) {
     console.error(error);
-    renderErrorMessage(messageElement, error.message);
+    messageElement.innerHTML = "";
+    renderErrorMessage(messageElement, getUserFriendlyErrorMessage(error));
   } finally {
     button.textContent = "Submit";
   }

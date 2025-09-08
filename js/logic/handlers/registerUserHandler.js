@@ -13,6 +13,7 @@ export function registerHandler() {
     setupFormValidation(form, "button", "input, textarea");
   }
 }
+import { getUserFriendlyErrorMessage } from "../utils/errorUtils.js";
 
 async function submitForm(event) {
   event.preventDefault();
@@ -33,7 +34,7 @@ async function submitForm(event) {
     }, 2000); // Redirect after 2 seconds
   } catch (error) {
     console.error("Error registering user:", error);
-    renderErrorMessage(form, error.message);
+    renderErrorMessage(form, getUserFriendlyErrorMessage(error));
   } finally {
     button.disabled = false;
   }
