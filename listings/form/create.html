@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../styles/input.css" />
     <script type="module" src="../../js/app.js"></script>
   </head>
-  <body class="font-sans bg-background">
+  <body class="font-inter min-h-screen">
     <header class="flex justify-between items-center text-primary-text">
       <nav
         class="bg-white border-b-1 border-border w-full top-0 z-50 fixed md:relative md:py-2"
@@ -27,7 +27,12 @@
             </div>
 
             <!-- Hamburger Menu -->
-            <div class="flex md:hidden">
+            <div
+              class="flex md:hidden focus:outline-none"
+              aria-expanded="false"
+              aria-controls="mobile-menu"
+              aria-label="Toggle navigation menu"
+            >
               <button id="menu-toggle" class="md:hidden focus:outline-none">
                 <div
                   id="hamburger"
@@ -49,12 +54,18 @@
             <!-- Desktop Menu (hidden on mobile) -->
             <div class="hidden md:flex space-x-8 absolute right-0">
               <a
+                href="/"
+                class="block px-3 py-2 text-gray-800 hover:border-b-1 hover:border-primary-hover transition"
+                >Home</a
+              >
+
+              <a
                 href="/listings/"
                 class="block px-3 py-2 text-gray-800 hover:border-b-1 hover:border-primary-hover transition"
                 >Listings</a
               >
               <a
-                href="/listings/create.html"
+                href="/listings/form/create.html"
                 class="block px-3 py-2 text-gray-800 hover:border-b-1 hover:border-primary-hover transition"
                 >Create listing</a
               >
@@ -80,16 +91,22 @@
           id="mobile-menu"
           class="hidden md:hidden bg-white shadow-lg fixed w-full z-50"
         >
-          <div
+          <nav
             class="px-4 pt-2 pb-3 space-y-1 flex flex-col items-baseline justify-baseline"
           >
+            <a
+              href="/"
+              class="block py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md transition"
+              >Home</a
+            >
+
             <a
               href="/listings/"
               class="block py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md transition"
               >Listings</a
             >
             <a
-              href="/listings/create.html"
+              href="/listings/form/create.html"
               class="py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md transition flex items-baseline justify-baseline"
               >Create listing</a
             >
@@ -105,21 +122,18 @@
               id="login-link-mobile"
               >Log In</a
             >
-          </div>
+          </nav>
         </div>
       </nav>
     </header>
-    <main
-      class="font-inter max-w-lg mx-auto mt-14 p-4 text-left bg-background-secondary sm:my-5"
-    >
-      <h1 class="text-xl font-bold m-2 w-full text-center">Create a Listing</h1>
+    <main class="max-w-2xl mt-12 sm:px-6 sm:mt-0 lg:px-8 mx-auto">
       <img
-        class="mx-auto mb-4 max-w-60 h-auto"
+        class="mx-auto mb-4 max-w-60 h-auto lg:max-w-80 mt-10"
         src="/assets//undraw_to-do-list_o3jf.svg"
         alt="to do list Illustration"
       />
     </main>
-    <footer class="bg-gray-500 border-t-1 border-border mt-2">
+    <footer class="bg-gray-500 border-t-1 border-border mt-5">
       <div class="text-center text-xs text-gray-200 py-4">
         &copy; 2025 Listify. All rights reserved.
       </div>
