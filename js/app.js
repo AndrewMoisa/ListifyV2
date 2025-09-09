@@ -12,72 +12,79 @@ import { createListingsHandler } from "./logic/handlers/listings/createListingHa
 import { editListingsHandler } from "./logic/handlers/listings/editListingHandler.js";
 import { updateProfileHandler } from "./logic/handlers/profile/updateProfileHandler.js";
 
-// Define routes in one place
-const routes = {
-  "/": () => {
+// Common handlers that run on every page
+function runCommonHandlers() {
+  try {
     mobileMenuToggle();
     authUser();
-    changeReview();
-    listingsHandler();
-  },
-  "/listings": () => {
-    mobileMenuToggle();
-    authUser();
-    listingsHandler(20);
-    searchHandler();
-  },
-  "/listings/ad": () => {
-    mobileMenuToggle();
-    authUser();
-    adDetailsHandler();
-  },
-  "/register": () => {
-    mobileMenuToggle();
-    authUser();
-    registerHandler();
-  },
-  "/login": () => {
-    mobileMenuToggle();
-    authUser();
-    loginHandler();
-  },
-  "/profile": () => {
-    mobileMenuToggle();
-    authUser();
-    profileDetailsHandler();
-    updateProfileHandler();
-    profileListingsHandler();
-    profileWinsHandler();
-  },
-  "/listings/form/create": () => {
-    mobileMenuToggle();
-    authUser();
-    createListingsHandler();
-  },
-  "/listings/form/edit": () => {
-    mobileMenuToggle();
-    authUser();
-    editListingsHandler();
-  },
-};
-
-// Router function
-function router() {
-  const path = window.location.pathname.replace(/\/+$/, ""); // strip trailing /
-  const route = routes[path] || routes["/"]; // fallback to home
-  route();
+  } catch (error) {
+    console.error("Error in common handlers:", error);
+  }
 }
 
-router();
+// Routes configuration
+const routes = [
+  {
+    paths: ["/", "/index.html"],
+    handlers: [() => changeReview(), () => listingsHandler()],
+  },
+  {
+    paths: ["/listings/", "/listings/index.html"],
+    handlers: [() => listingsHandler(20), () => searchHandler()],
+  },
+  {
+    paths: ["/listings/ad.html"],
+    handlers: [() => adDetailsHandler()],
+  },
+  {
+    paths: ["/register/", "/register/index.html"],
+    handlers: [() => registerHandler()],
+  },
+  {
+    paths: ["/login/", "/login/index.html"],
+    handlers: [() => loginHandler()],
+  },
+  {
+    paths: ["/profile/", "/profile/index.html"],
+    handlers: [
+      () => profileDetailsHandler(),
+      () => updateProfileHandler(),
+      () => profileListingsHandler(),
+      () => profileWinsHandler(),
+    ],
+  },
+  {
+    paths: ["/listings/form/create.html"],
+    handlers: [() => createListingsHandler()],
+  },
+  {
+    paths: ["/listings/form/edit.html"],
+    handlers: [() => editListingsHandler()],
+  },
+];
 
-// Handle back/forward
-window.addEventListener("popstate", router);
+function router() {
+  const pathname = window.location.pathname;
 
-// Optional: intercept clicks on links (to avoid reloads)
-document.addEventListener("click", (e) => {
-  if (e.target.matches("a[data-link]")) {
-    e.preventDefault();
-    history.pushState(null, null, e.target.href);
-    router();
+  // Always run common handlers
+  runCommonHandlers();
+
+  // Find exact matching route
+  const route = routes.find((route) => route.paths.includes(pathname));
+
+  if (route) {
+    // Execute handlers for the matched route
+    route.handlers.forEach((handler) => {
+      try {
+        handler();
+      } catch (error) {
+        console.error(`Error executing handler for ${pathname}:`, error);
+      }
+    });
+  } else {
+    console.warn(`No route found for path: ${pathname}`);
   }
-});
+}
+
+// Initialize router when DOM is ready
+document.addEventListener("DOMContentLoaded", router);
