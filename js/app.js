@@ -54,11 +54,11 @@ const routes = [
     ],
   },
   {
-    paths: ["/listings/form/create.html"],
+    paths: ["/form/"],
     handlers: [() => createListingsHandler()],
   },
   {
-    paths: ["/listings/form/edit.html"],
+    paths: ["/form/edit.html"],
     handlers: [() => editListingsHandler()],
   },
 ];

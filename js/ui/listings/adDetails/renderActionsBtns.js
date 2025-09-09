@@ -8,7 +8,7 @@ export function renderActionBtns(container, data) {
   editButton.className =
     "mt-4 bg-accent text-white px-4 py-2 rounded hover:bg-primary-hover transition w-full text-center";
   editButton.dataset.set = data.id;
-  editButton.href = `/listings/form/edit.html?id=${data.id}`;
+  editButton.href = `/form/edit.html?id=${data.id}`;
   editButton.textContent = "Edit";
 
   // Create Delete button
