@@ -1,6 +1,7 @@
 import { placeBid } from "../../../api/placeBid.js";
 import { renderBidInfo } from "../../../../ui/listings/adDetails/renderBidMessage.js";
 import { renderErrorMessage } from "../../../../ui/shared/displayMessage.js";
+import { instantRenderBid } from "../../../../ui/listings/adDetails/renderInstantBid.js";
 
 export async function placeBidHandler(id) {
   const placeBidBtn = document.getElementById("place-bid");
@@ -33,6 +34,12 @@ export async function placeBidHandler(id) {
       placeBidBtn.textContent = "Placing Bid...";
 
       const bidPlaced = await placeBid(id, { amount: bidAmount });
+
+      // Instant render bid in bid history
+      if (bidPlaced) {
+        instantRenderBid(bidAmount);
+      }
+
       renderBidInfo(bidPlaced, bidContainer);
 
       // Clear input after successful bid
