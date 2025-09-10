@@ -1,12 +1,18 @@
+import { listingsUrl } from "../constants/constants.js";
+import { bearerToken } from "../constants/constants.js";
+
 export async function createListing(data) {
-  const token = localStorage.getItem("token");
-  if (!token) {
+  const token = bearerToken;
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const response = await fetch("/.netlify/functions/api?endpoint=listings", {
+  const response = await fetch(`${listingsUrl}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: headers,
     body: JSON.stringify(data),
   });
 

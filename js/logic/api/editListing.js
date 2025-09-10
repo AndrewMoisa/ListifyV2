@@ -1,11 +1,21 @@
-import { baseUrl } from "../../logic/constants/constants.js";
+import { listingsUrl } from "../constants/constants.js";
+import { bearerToken } from "../constants/constants.js";
 
 export async function editListing(data, id) {
-  const url = `${baseUrl}listings/${id}`;
+  const token = bearerToken;
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
 
-  const options = fetchOptions("PUT", data);
+  const response = await fetch(`${listingsUrl}/${id}`, {
+    method: "PUT",
+    headers: headers,
+    body: JSON.stringify(data),
+  });
 
-  const response = await fetch(url, options);
   const json = await response.json();
 
   if (!response.ok) {

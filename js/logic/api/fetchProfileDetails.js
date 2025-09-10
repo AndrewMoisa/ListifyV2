@@ -1,7 +1,7 @@
-import { baseUrl } from "../constants/constants.js";
+import { bearerToken } from "../constants/constants.js";
 
 export async function fetchProfileDetails(url) {
-  const token = localStorage.getItem("token");
+  const token = bearerToken;
 
   const headers = { "Content-Type": "application/json" };
   if (token) {

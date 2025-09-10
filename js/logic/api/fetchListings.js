@@ -1,5 +1,8 @@
+import { listingsUrl } from "../constants/constants.js";
+import { bearerToken } from "../constants/constants.js";
+
 export async function fetchListings(limit = 10, pageId = 1) {
-  const token = localStorage.getItem("token");
+  const token = bearerToken;
 
   const headers = { "Content-Type": "application/json" };
   if (token) {
@@ -7,7 +10,7 @@ export async function fetchListings(limit = 10, pageId = 1) {
   }
 
   const response = await fetch(
-    `/.netlify/functions/api?endpoint=listings?limit=${limit}&_bids=true&page=${pageId}&_active=true`,
+    `${listingsUrl}?limit=${limit}&_bids=true&page=${pageId}&_active=true`,
     {
       method: "GET",
       headers: headers,

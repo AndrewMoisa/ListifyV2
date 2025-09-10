@@ -1,8 +1,9 @@
 import { getToken } from "../utils/storage.js";
 
 export const bearerToken = getToken();
-// export const apiKey = process.env.API_KEY;
-export const baseUrl = "https://v2.api.noroff.dev/auction/";
-export const registerUrl = `https://v2.api.noroff.dev/auth/register`;
-export const loginUrl = `https://v2.api.noroff.dev/auth/login`;
+export const baseUrl = "/.netlify/functions/api?endpoint=";
+export const listingsUrl = `${baseUrl}listings`;
+export const profilesUrl = `${baseUrl}profiles`;
 export const searchUrl = `${baseUrl}listings/search`;
+export const loginUrl = `https://v2.api.noroff.dev/auth/local`;
+export const registerUrl = `https://v2.api.noroff.dev/auth/local/register`;

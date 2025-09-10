@@ -2,7 +2,9 @@ export async function handler(event) {
   const apiKey = process.env.API_KEY; // secret
   const baseUrl = process.env.BASE_URL;
 
-  const endpoint = event.queryStringParameters.endpoint;
+  // Extract the endpoint from query params
+  const { endpoint, ...otherParams } = event.queryStringParameters || {};
+
   if (!endpoint) {
     return { statusCode: 400, body: "Missing endpoint" };
   }
@@ -21,7 +23,18 @@ export async function handler(event) {
     headers["Authorization"] = clientAuth; // Bearer token from frontend
   }
 
-  const response = await fetch(`${baseUrl}${endpoint}`, {
+  // Build URL with additional query parameters
+  let url = `${baseUrl}${endpoint}`;
+
+  // Add other query parameters if they exist
+  if (Object.keys(otherParams).length > 0) {
+    const queryString = new URLSearchParams(otherParams).toString();
+    url += (url.includes("?") ? "&" : "?") + queryString;
+  }
+
+  console.log("Forwarding request to:", url);
+
+  const response = await fetch(url, {
     method: event.httpMethod,
     headers,
     body: body ? JSON.stringify(body) : undefined,

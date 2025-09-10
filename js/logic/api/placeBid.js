@@ -1,12 +1,27 @@
-import { baseUrl } from "../../logic/constants/constants.js";
+import { listingsUrl } from "../../logic/constants/constants.js";
+import { bearerToken } from "../../logic/constants/constants.js";
 
 export async function placeBid(id, data) {
-  const url = `${baseUrl}listings/${id}/bids`;
+  const token = bearerToken;
 
-  const options = fetchOptions("POST", data);
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
 
-  const response = await fetch(url, options);
+  const response = await fetch(`${listingsUrl}/${id}/bids`, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(data),
+  });
+
   const json = await response.json();
+
+  if (!response.ok) {
+    throw new Error(`Error placing bid: ${json.errors?.[0]?.message}`);
+  }
 
   return json;
 }
