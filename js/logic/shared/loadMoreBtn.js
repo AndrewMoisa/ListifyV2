@@ -4,7 +4,7 @@ export function loadMoreBtn(metaPagination, numberOfListings, listingsHandler) {
   const loadMoreContainer = document.getElementById("load-more-container");
 
   // Only show the button on listing pages
-  if (!window.location.href.includes("/listing/")) {
+  if (!window.location.href.includes("/listings/")) {
     return;
   }
 

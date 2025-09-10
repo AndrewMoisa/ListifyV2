@@ -32,8 +32,6 @@ export async function handler(event) {
     url += (url.includes("?") ? "&" : "?") + queryString;
   }
 
-  console.log("Forwarding request to:", url);
-
   const response = await fetch(url, {
     method: event.httpMethod,
     headers,
