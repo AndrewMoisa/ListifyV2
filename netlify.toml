@@ -1,8 +1,7 @@
-# example netlify.toml
 [build]
-  command = "npm run build"
-  functions = "netlify/functions"
-  publish = "dist"
+  command = "npm run build" # Adjust based on your project (e.g., for React/Next.js)
+  publish = "dist" # Adjust to your build output folder
+  functions = "netlify/functions" # Path to your functions folder
 
   ## Uncomment to use this redirect for Single Page Applications like create-react-app.
   ## Not needed for static site generators.
