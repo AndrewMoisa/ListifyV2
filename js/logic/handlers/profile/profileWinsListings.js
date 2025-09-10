@@ -10,7 +10,7 @@ export async function profileWinsHandler() {
   const container = document.querySelector("#won-listings-container");
 
   try {
-    let url = `${baseUrl}profiles/${userName}/wins`;
+    let url = `profiles/${userName}/wins`;
     if (!container) {
       throw new Error("Container element not found");
     }
@@ -19,7 +19,7 @@ export async function profileWinsHandler() {
     }
 
     if (queryName) {
-      url = `${baseUrl}profiles/${queryName}/wins`;
+      url = `profiles/${queryName}/wins`;
     }
 
     const profileDetails = await fetchProfileDetails(url);

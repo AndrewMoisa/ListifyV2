@@ -1,12 +1,15 @@
-import { baseUrl } from "../../logic/constants/constants.js";
-import { fetchOptions } from "../../logic/utils/fetchOptions.js";
-
 export async function createListing(data) {
-  const url = `${baseUrl}listings`;
+  const token = localStorage.getItem("token");
+  if (!token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
 
-  const options = fetchOptions("POST", data);
+  const response = await fetch("/.netlify/functions/api?endpoint=listings", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
 
-  const response = await fetch(url, options);
   const json = await response.json();
 
   if (!response.ok) {

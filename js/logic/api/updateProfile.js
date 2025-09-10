@@ -1,5 +1,4 @@
 import { baseUrl } from "../constants/constants.js";
-import { fetchOptions } from "../utils/fetchOptions.js";
 
 export async function updateProfile(data, name) {
   const url = `${baseUrl}profiles/${name}`;

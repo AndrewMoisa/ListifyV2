@@ -1,4 +1,3 @@
-import { fetchOptions } from "../utils/fetchOptions.js";
 import { baseUrl } from "../constants/constants.js";
 
 export async function fetchAdDetails(id) {

@@ -11,7 +11,7 @@ export async function profileDetailsHandler() {
   const userName = getUsername();
   const queryParams = getQueryParam("name");
 
-  let url = `${baseUrl}profiles/${userName}?&_listings=true&_wins=true`;
+  let url = `profiles/${userName}?&_listings=true&_wins=true`;
   try {
     if (!container) {
       console.error("Profile details container not found in DOM");
@@ -19,7 +19,7 @@ export async function profileDetailsHandler() {
     }
 
     if (queryParams) {
-      url = `${baseUrl}profiles/${queryParams}?&_listings=true&_wins=true`;
+      url = `profiles/${queryParams}?&_listings=true&_wins=true`;
     }
 
     if (!userName && !queryParams) {

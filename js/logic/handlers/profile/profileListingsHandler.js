@@ -9,7 +9,7 @@ export async function profileListingsHandler() {
   const userName = getUsername();
   const queryName = getQueryParam("name");
 
-  let url = `${baseUrl}profiles/${userName}/listings`;
+  let url = `profiles/${userName}/listings`;
   const container = document.querySelector("#bid-listings-container");
 
   try {

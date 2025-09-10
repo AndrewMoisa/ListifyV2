@@ -1,5 +1,4 @@
 import { searchUrl } from "../constants/constants.js";
-import { fetchOptions } from "../utils/fetchOptions.js";
 
 export async function fetchSearch(query, limit = 10, pageId = 1) {
   const options = fetchOptions("GET");

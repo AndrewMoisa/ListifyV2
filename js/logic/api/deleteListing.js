@@ -1,12 +1,24 @@
 import { baseUrl } from "../../logic/constants/constants.js";
-import { fetchOptions } from "../../logic/utils/fetchOptions.js";
 
 export async function deleteListing(id) {
-  const url = `${baseUrl}listings/${id}`;
+  const token = localStorage.getItem("token");
+  if (!token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
 
-  const options = fetchOptions("DELETE");
+  const response = await fetch(
+    `/.netlify/functions/api?endpoint=listings/${id}`,
+    {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    }
+  );
 
-  const response = await fetch(url, options);
+  const json = await response.json();
+
+  if (!response.ok) {
+    throw new Error(`Error deleting listing: ${json.errors?.[0]?.message}`);
+  }
 
   return { success: true };
 }
