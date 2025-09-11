@@ -76,13 +76,13 @@ Listify is a specialized auction platform designed exclusively for students. It 
 
 5. For production deployment:
 
-   -Connect your GitHub repository to Netlify
-   -Configure environment variables in Netlify dashboard:
-   -Go to Site settings > Environment variables
-   -Add API_KEY and BASE_URL variables
-   -Set build command to npm run build
-   -Set publish directory to dist
-   -Add a netlify.toml file to your project
+   - Connect your GitHub repository to Netlify
+   - Configure environment variables in Netlify dashboard:
+   - Go to Site settings > Environment variables
+   - Add API_KEY and BASE_URL variables
+   - Set build command to npm run build
+   - Set publish directory to dist
+   - Add a netlify.toml file to your project
 
 ```toml
 [build]
