@@ -1,4 +1,9 @@
 export function processMedia(data) {
+  // Process title if it exists
+  if (data.title) {
+    data.title = data.title.trim();
+  }
+
   if (data.mediaUrl || data.mediaAlt) {
     const mediaItem = {};
 
@@ -17,5 +22,6 @@ export function processMedia(data) {
   } else {
     delete data.mediaUrl;
     delete data.mediaAlt;
+    delete data.title;
   }
 }

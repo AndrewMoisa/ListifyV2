@@ -29,7 +29,6 @@ export async function editListingsHandler() {
 async function submitForm(event) {
   event.preventDefault();
   const dataId = getQueryParam("id");
-  console.log("Data ID from query:", dataId);
   const button = document.querySelector("#create-button");
   const form = event.target;
   const formData = new FormData(form);
@@ -49,6 +48,8 @@ async function submitForm(event) {
       .map((tag) => tag.trim())
       .filter(Boolean); // Remove empty strings
   }
+
+  console.log(data);
 
   processMedia(data);
 

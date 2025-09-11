@@ -10,7 +10,7 @@ export function getUserFriendlyErrorMessage(error) {
   }
 
   if (error.message?.includes("email")) {
-    return "Please enter a valid email address.";
+    return "Invalid email or password. Please try again";
   }
 
   // Default fallback message

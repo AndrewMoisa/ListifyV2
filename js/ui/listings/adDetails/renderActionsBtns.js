@@ -6,7 +6,7 @@ export function renderActionBtns(container, data) {
   const editButton = document.createElement("a");
   editButton.id = "edit-listing";
   editButton.className =
-    "mt-4 bg-accent text-white px-4 py-2 rounded hover:bg-primary-hover transition w-full text-center";
+    "mt-4 bg-accent text-white px-4 py-2 rounded hover:bg-accent-dark transition w-full text-center";
   editButton.dataset.set = data.id;
   editButton.href = `/form/edit.html?id=${data.id}`;
   editButton.textContent = "Edit";
@@ -16,7 +16,7 @@ export function renderActionBtns(container, data) {
   deleteButton.id = "delete-listing";
   deleteButton.type = "button";
   deleteButton.className =
-    "mt-4 ml-2 bg-secondary text-white px-4 py-2 rounded hover:bg-primary-hover transition w-full text-center";
+    "mt-4 ml-2 bg-secondary text-white px-4 py-2 rounded hover:bg-secondary-hover transition w-full text-center";
   deleteButton.textContent = "Delete";
 
   // Create message container for bid messages

@@ -8,8 +8,10 @@
 
   --color-primary: #4338ca;
   --color-primary-hover: #3730a3;
-  --color-secondary: #ea580c;
+  --color-secondary: #b30000;
+  --color-secondary-hover: #800000;
   --color-accent: #0e7490;
+  --color-accent-dark: #155e75;
   --color-success: #047857;
   --color-error: #dc2626;
   --color-text-primary: #111827;

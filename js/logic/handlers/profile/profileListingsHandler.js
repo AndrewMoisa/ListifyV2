@@ -22,7 +22,7 @@ export async function profileListingsHandler() {
     }
 
     if (queryName) {
-      url = `${baseUrl}profiles/${queryName}/listings`;
+      url = `profiles/${queryName}/listings`;
     }
 
     const profileDetails = await fetchProfileDetails(url);

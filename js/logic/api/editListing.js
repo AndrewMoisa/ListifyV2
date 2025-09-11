@@ -2,6 +2,7 @@ import { listingsUrl } from "../constants/constants.js";
 import { bearerToken } from "../constants/constants.js";
 
 export async function editListing(data, id) {
+  console.log(data);
   const token = bearerToken;
   const headers = {
     "Content-Type": "application/json",

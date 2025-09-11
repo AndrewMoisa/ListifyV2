@@ -45,7 +45,7 @@ function createAuctionDisplay(
   const sellerLink = document.createElement("a");
   sellerLink.className =
     "text-lg font-semibold text-text-primary mb-2 underline inline-block";
-  sellerLink.href = `/profile/?name=${encodeURIComponent(data.seller.name)}`; // Sanitize URL parameter
+  sellerLink.href = `/profile/?name=${data.seller.name}`; // Sanitize URL parameter
   sellerLink.textContent = `Seller: ${data.seller.name}`;
   titleContainer.appendChild(sellerLink);
 
@@ -134,6 +134,13 @@ function createAuctionDisplay(
   bidInput.placeholder = `Suggested bid: ${currentBid + 10} NOK`;
   bidInput.required = true;
   bidInput.className = "border p-2 rounded w-full border-b-2 border-gray-300";
+  // Add a visually hidden label for accessibility
+  const bidInputLabel = document.createElement("label");
+  bidInputLabel.htmlFor = "bid";
+  bidInputLabel.textContent = "Enter your bid amount";
+  bidInputLabel.className = "sr-only"; // Assumes Tailwind or similar for screen-reader only
+  bidSection.appendChild(bidInputLabel);
+
   bidSection.appendChild(bidInput);
 
   const placeBidButton = document.createElement("button");
