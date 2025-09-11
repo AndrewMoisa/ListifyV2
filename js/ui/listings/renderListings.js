@@ -26,7 +26,7 @@ function createListingElement(listing) {
 
   // Image
   const img = document.createElement("img");
-  img.src = listing.media[0]?.url || "../../../assets/no-image.png";
+  img.src = listing.media[0]?.url || "../assets/no-image.png";
   img.alt = listing.media[0]?.alt || "Listing image";
   img.classList.add("w-full", "h-40", "object-cover", "mb-4", "rounded");
 
