@@ -1,6 +1,6 @@
 # Listify - Student Marketplace Auction Platform
 
-![Listify Logo](./assets/vector-hero.png)
+<img src="./assets/vector-hero.png" alt="Listify Logo" width="100" height="100">
 
 ## Overview
 
