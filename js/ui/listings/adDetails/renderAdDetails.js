@@ -163,17 +163,17 @@ function createAuctionDisplay(
   const locationText = document.createElement("p");
   locationText.className = "text-gray-700 text-center";
 
-  const locationSpan = document.createElement("span");
-  locationSpan.textContent = "Item is located in Oslo, Norway";
-  locationText.appendChild(locationSpan);
-  locationSection.appendChild(locationText);
-
   // Create pin icon
   const pinImage = document.createElement("img");
   pinImage.src = pin;
   pinImage.alt = "pin icon";
   pinImage.className = "inline w-5 h-5 mr-2";
-  locationText.appendChild(pinImage);
+
+  const locationSpan = document.createElement("span");
+  locationSpan.appendChild(pinImage);
+  locationSpan.append("Item is located in Oslo, Norway");
+  locationText.appendChild(locationSpan);
+  locationSection.appendChild(locationText);
 
   // Create bid history section
   const bidHistorySection = document.createElement("div");
