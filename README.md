@@ -28,7 +28,7 @@ Listify is a specialized auction platform designed exclusively for students. It 
     <td><img src="./screenshots/listings.png" alt="Listings page" width="100%"></td>
   </tr>
   <tr>
-    <td><img src="./screenshots/product.png" alt="Product detail" width="100%"></td>
+    <td><img src="./screenshots/viewlisting.png.png" alt="Product detail" width="100%"></td>
     <td><img src="./screenshots/profile.png" alt="Profile page" width="100%"></td>
   </tr>
 </table>
