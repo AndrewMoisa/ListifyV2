@@ -1,6 +1,7 @@
 import { modalHandler } from "../../../logic/shared/modalHandler.js";
 import { startCountdown } from "../../../logic/utils/getTimeRemaining.js";
 import { getBids } from "../../../logic/utils/getBids.js";
+import pin from "../../../../assets/pin.png";
 
 export async function renderAdDetails(data, container) {
   const adTitle = document.getElementById("ad-title");
@@ -166,6 +167,13 @@ function createAuctionDisplay(
   locationSpan.textContent = "Item is located in Oslo, Norway";
   locationText.appendChild(locationSpan);
   locationSection.appendChild(locationText);
+
+  // Create pin icon
+  const pinImage = document.createElement("img");
+  pinImage.src = pin;
+  pinImage.alt = "pin icon";
+  pinImage.className = "inline w-5 h-5 mr-2";
+  locationText.appendChild(pinImage);
 
   // Create bid history section
   const bidHistorySection = document.createElement("div");
