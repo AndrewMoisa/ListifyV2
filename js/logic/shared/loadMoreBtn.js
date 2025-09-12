@@ -23,7 +23,8 @@ export function loadMoreBtn(metaPagination, numberOfListings, listingsHandler) {
   // Create "Load More" button
   const loadMoreButton = document.createElement("button");
   loadMoreButton.textContent = "Load More";
-  loadMoreButton.className = "bg-primary text-white rounded-sm px-4 py-2 mt-4";
+  loadMoreButton.className =
+    "bg-primary text-white rounded-sm px-4 py-2 mt-4 hover:bg-primary-hover cursor-pointer";
   loadMoreButton.setAttribute("aria-label", "Load more listings");
   loadMoreContainer.appendChild(loadMoreButton);
 
