@@ -31,7 +31,6 @@
             <!-- Logo -->
             <div class="flex-shrink-0">
               <a
-                href="/"
                 class="text-2xl font-space-grotesk text-text-primary leading-0 md:text-2xl lg:text-4xl"
                 >Listify
                 <span class="block text-xs md:text-base lg:text-lg"
@@ -47,20 +46,18 @@
               aria-controls="mobile-menu"
               aria-label="Toggle navigation menu"
             >
-              <button id="menu-toggle" class="md:hidden focus:outline-none">
+              <button
+                id="menu-toggle"
+                class="md:hidden focus:outline-none"
+                aria-expanded="false"
+                aria-controls="mobile-menu"
+                aria-label="Toggle navigation menu"
+              >
                 <div
                   id="hamburger"
                   class="relative w-6 h-5 flex flex-col justify-between items-center transition-all duration-300 ease-in-out"
                 >
-                  <span
-                    class="bar absolute top-0 w-6 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out"
-                  ></span>
-                  <span
-                    class="bar absolute top-1/2 w-6 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out -translate-y-1/2"
-                  ></span>
-                  <span
-                    class="bar absolute bottom-0 w-6 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out"
-                  ></span>
+                  <!-- Hamburger spans -->
                 </div>
               </button>
             </div>
@@ -79,7 +76,7 @@
                 >Listings</a
               >
               <a
-                href="/listings/form/create.html"
+                href="/form/"
                 class="block px-3 py-2 text-gray-800 hover:border-b-1 hover:border-primary-hover transition"
                 id="create-listing-link"
                 >Create listing</a
@@ -121,7 +118,7 @@
               >Listings</a
             >
             <a
-              href="/listings/form/create.html"
+              href="/form/"
               class="py-2 text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded-md transition flex items-baseline justify-baseline"
               id="create-listing-link-mobile"
               >Create listing</a

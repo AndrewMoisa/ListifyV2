@@ -31,7 +31,6 @@
             <!-- Logo -->
             <div class="flex-shrink-0">
               <a
-                href="/"
                 class="text-2xl font-space-grotesk text-text-primary leading-0 md:text-2xl lg:text-4xl"
                 >Listify
                 <span class="block text-xs md:text-base lg:text-lg"
@@ -47,20 +46,18 @@
               aria-controls="mobile-menu"
               aria-label="Toggle navigation menu"
             >
-              <button id="menu-toggle" class="md:hidden focus:outline-none">
+              <button
+                id="menu-toggle"
+                class="md:hidden focus:outline-none"
+                aria-expanded="false"
+                aria-controls="mobile-menu"
+                aria-label="Toggle navigation menu"
+              >
                 <div
                   id="hamburger"
                   class="relative w-6 h-5 flex flex-col justify-between items-center transition-all duration-300 ease-in-out"
                 >
-                  <span
-                    class="bar absolute top-0 w-6 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out"
-                  ></span>
-                  <span
-                    class="bar absolute top-1/2 w-6 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out -translate-y-1/2"
-                  ></span>
-                  <span
-                    class="bar absolute bottom-0 w-6 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out"
-                  ></span>
+                  <!-- Hamburger spans -->
                 </div>
               </button>
             </div>
@@ -142,7 +139,8 @@
         </div>
       </nav>
     </header>
-    <main class="max-w-2xl mt-12 sm:px-6 sm:mt-0 lg:px-8 mx-auto">
+    <main class="max-w-2xl mt-18 md:mt-5 sm:px-6 lg:px-0 mx-auto">
+      <h1 class="text-2xl font-dm-sans text-center">Create a Listing</h1>
       <img
         class="mx-auto mb-4 max-w-60 h-auto lg:max-w-80 mt-10"
         src="/assets//undraw_to-do-list_o3jf.svg"

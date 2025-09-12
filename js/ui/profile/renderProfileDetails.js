@@ -38,7 +38,7 @@ export function renderProfileDetails(profile, container) {
   userInfo.className = "space-y-1 text-sm md:text-base";
 
   // Create and add username
-  const username = document.createElement("p");
+  const username = document.createElement("h1");
   username.className = "text-2xl font-semibold underline";
   username.textContent = profile.name;
 
