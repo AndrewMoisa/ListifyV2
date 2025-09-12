@@ -1,6 +1,6 @@
 export async function handler(event) {
-  const apiKey = process.env.API_KEY; // secret
-  const baseUrl = process.env.BASE_URL;
+  const apiKey = process.env.API_KEY; // import from Netlify env variables
+  const baseUrl = process.env.BASE_URL; // import from Netlify env variables
 
   // Extract the endpoint from query params
   const { endpoint, ...otherParams } = event.queryStringParameters || {};
