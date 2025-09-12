@@ -1,7 +1,7 @@
 import { listingsUrl } from "../constants/constants.js";
 import { bearerToken } from "../constants/constants.js";
 
-export async function fetchListings(limit = 10, pageId = 1) {
+export async function fetchListings(limit = 10, pageId = 1, url) {
   const token = bearerToken;
 
   const headers = { "Content-Type": "application/json" };
@@ -9,13 +9,10 @@ export async function fetchListings(limit = 10, pageId = 1) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const response = await fetch(
-    `${listingsUrl}?limit=${limit}&page=${pageId}&_bids=true&_active=true&_seller=true&sortOrder=asc`,
-    {
-      method: "GET",
-      headers: headers,
-    }
-  );
+  const response = await fetch(url, {
+    method: "GET",
+    headers: headers,
+  });
 
   const json = await response.json();
 

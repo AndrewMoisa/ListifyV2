@@ -7,10 +7,13 @@ import { placeBidHandler } from "./placeBidHandler.js";
 import { deleteListingHandler } from "../deleteListingHandler.js";
 import { getUsername } from "../../../utils/storage.js";
 import { renderErrorMessage } from "../../../../ui/shared/displayMessage.js";
+import { listingsUrl } from "../../../constants/constants.js";
 
 export async function adDetailsHandler(numberOfListings = 4) {
   // Get the container for ad details
   const adDetailsContainer = document.getElementById("details-container");
+
+  const url = `${listingsUrl}?limit=${numberOfListings}&page=1&_bids=true&_active=true&_seller=true&sortOrder=desc`;
 
   // Get the container for more listings
   const container = document.getElementById("more-listings");
@@ -43,14 +46,18 @@ export async function adDetailsHandler(numberOfListings = 4) {
     }
 
     const limit = numberOfListings;
-    const listingsResponse = await fetchListings(limit);
+    const listingsResponse = await fetchListings(limit, undefined, url);
 
     container.innerHTML = ""; // Clear previous content
     renderListings(listingsResponse.data, container);
   } catch (error) {
     console.error("Error in adDetailsHandler:", error);
-    adDetailsContainer.innerHTML = "";
-    container.innerHTML = "";
-    renderErrorMessage(adDetailsContainer, error);
+    if (adDetailsContainer) {
+      adDetailsContainer.innerHTML = "";
+      renderErrorMessage(adDetailsContainer, error);
+    }
+    if (container) {
+      container.innerHTML = "";
+    }
   }
 }

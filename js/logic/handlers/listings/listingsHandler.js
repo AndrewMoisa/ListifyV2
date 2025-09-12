@@ -2,6 +2,7 @@ import { fetchListings } from "../../api/fetchListings.js";
 import { renderListings } from "../../../ui/listings/renderListings.js";
 import { renderErrorMessage } from "../../../ui/shared/displayMessage.js";
 import { loadMoreBtn } from "../../../logic/shared/loadMoreBtn.js";
+import { listingsUrl } from "../../constants/constants.js";
 
 // Store pagination state in memory
 let currentPage = 1;
@@ -10,6 +11,7 @@ export async function listingsHandler(
   numberOfListings = 4,
   pageId = currentPage
 ) {
+  const url = `${listingsUrl}?limit=${numberOfListings}&page=${currentPage}&_bids=true&_active=true&_seller=true&sortOrder=asc`;
   const container = document.getElementById("listings-container");
   try {
     if (!container) {
@@ -17,7 +19,7 @@ export async function listingsHandler(
     }
 
     // Fetch listings with the specified limit and page
-    const listingsIndex = await fetchListings(numberOfListings, pageId);
+    const listingsIndex = await fetchListings(numberOfListings, pageId, url);
     const { data: listings, meta: metaPagination } = listingsIndex;
 
     // Clear container only on the first page to avoid removing existing listings
