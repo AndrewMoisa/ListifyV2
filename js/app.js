@@ -11,6 +11,7 @@ import { authUser } from "./logic/auth/auth.js";
 import { createListingsHandler } from "./logic/handlers/listings/createListingHandler.js";
 import { editListingsHandler } from "./logic/handlers/listings/editListingHandler.js";
 import { updateProfileHandler } from "./logic/handlers/profile/updateProfileHandler.js";
+import { authGuards } from "./logic/auth/pageGuard.js";
 
 // Common handlers that run on every page
 function runCommonHandlers() {
@@ -66,23 +67,13 @@ const routes = [
 function router() {
   const pathname = window.location.pathname;
 
-  // Always run common handlers
   runCommonHandlers();
 
-  // Find exact matching route
-  const route = routes.find((route) => route.paths.includes(pathname));
+  if (!authGuards(pathname)) return;
 
+  const route = routes.find((r) => r.paths.includes(pathname));
   if (route) {
-    // Execute handlers for the matched route
-    route.handlers.forEach((handler) => {
-      try {
-        handler();
-      } catch (error) {
-        console.error(`Error executing handler for ${pathname}:`, error);
-      }
-    });
-  } else {
-    console.warn(`No route found for path: ${pathname}`);
+    route.handlers.forEach((h) => h());
   }
 }
 
