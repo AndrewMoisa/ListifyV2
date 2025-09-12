@@ -10,7 +10,7 @@ export async function fetchListings(limit = 10, pageId = 1) {
   }
 
   const response = await fetch(
-    `${listingsUrl}?&_active=true&_bids=true&limit=${limit}&_page=${pageId}`,
+    `${listingsUrl}?limit=${limit}&page=${pageId}&_bids=true&_active=true&_seller=true&sortOrder=asc`,
     {
       method: "GET",
       headers: headers,
