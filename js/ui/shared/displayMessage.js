@@ -1,4 +1,5 @@
 export function displayMessage(container, message, type = "success") {
+  clearMessages(container);
   const messageElement = document.createElement("div");
   messageElement.classList.add(
     type === "success" ? "success-message" : "error-message",
