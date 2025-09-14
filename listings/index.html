@@ -43,15 +43,11 @@
             <!-- Hamburger Menu -->
             <div
               class="flex md:hidden focus:outline-none"
+              role="button"
               aria-expanded="false"
               aria-controls="mobile-menu"
-              aria-label="Toggle navigation menu"
             >
-              <button
-                id="menu-toggle"
-                aria-label="Open main menu"
-                class="md:hidden focus:outline-none"
-              >
+              <div id="menu-toggle" class="md:hidden focus:outline-none">
                 <div
                   id="hamburger"
                   class="relative w-6 h-5 flex flex-col justify-between items-center transition-all duration-300 ease-in-out"
@@ -66,7 +62,7 @@
                     class="bar absolute bottom-0 w-6 h-0.5 bg-gray-800 transition-all duration-300 ease-in-out"
                   ></span>
                 </div>
-              </button>
+              </div>
             </div>
 
             <!-- Desktop Menu (hidden on mobile) -->
