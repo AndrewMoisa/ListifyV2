@@ -19,6 +19,10 @@ export async function placeBid(id, data) {
 
   const json = await response.json();
 
+  if (response.status === 401) {
+    throw new Error("Unauthorized: Please log in to place a bid.");
+  }
+
   if (!response.ok) {
     throw new Error(`Error placing bid: ${json.errors?.[0]?.message}`);
   }
